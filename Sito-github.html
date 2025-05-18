@@ -3204,7 +3204,15 @@ window.Quarto = {
   <li><a href="#interpretazione-test-per-assunti" id="toc-interpretazione-test-per-assunti" class="nav-link" data-scroll-target="#interpretazione-test-per-assunti">Interpretazione test per assunti</a></li>
   <li><a href="#interpretazione-path-diagram-modelli-multilivello" id="toc-interpretazione-path-diagram-modelli-multilivello" class="nav-link" data-scroll-target="#interpretazione-path-diagram-modelli-multilivello">Interpretazione path diagram modelli multilivello</a></li>
   <li><a href="#matrice-psi-ψ---effetti-casuali" id="toc-matrice-psi-ψ---effetti-casuali" class="nav-link" data-scroll-target="#matrice-psi-ψ---effetti-casuali">Matrice PSI (Ψ) - effetti casuali</a></li>
-  <li><a href="#lettura-output" id="toc-lettura-output" class="nav-link" data-scroll-target="#lettura-output">Lettura output</a></li>
+  <li><a href="#lettura-output" id="toc-lettura-output" class="nav-link" data-scroll-target="#lettura-output">Lettura output</a>
+  <ul class="collapse">
+  <li><a href="#regressione-lineare" id="toc-regressione-lineare" class="nav-link" data-scroll-target="#regressione-lineare">Regressione lineare</a></li>
+  <li><a href="#analisi-della-varianza" id="toc-analisi-della-varianza" class="nav-link" data-scroll-target="#analisi-della-varianza">Analisi della varianza</a></li>
+  <li><a href="#confronto-tra-modelli-aic" id="toc-confronto-tra-modelli-aic" class="nav-link" data-scroll-target="#confronto-tra-modelli-aic">Confronto tra modelli (AIC)</a></li>
+  <li><a href="#chisq-test-per-modelli-annidati" id="toc-chisq-test-per-modelli-annidati" class="nav-link" data-scroll-target="#chisq-test-per-modelli-annidati">Chisq Test per modelli annidati</a></li>
+  <li><a href="#bayes-factor-analysis" id="toc-bayes-factor-analysis" class="nav-link" data-scroll-target="#bayes-factor-analysis">Bayes Factor Analysis</a></li>
+  <li><a href="#log-relative-evidence-tra-modelli-bayes-factor" id="toc-log-relative-evidence-tra-modelli-bayes-factor" class="nav-link" data-scroll-target="#log-relative-evidence-tra-modelli-bayes-factor">Log Relative Evidence tra modelli (Bayes Factor)</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -3906,10 +3914,10 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="matrice-psi-ψ---effetti-casuali">Matrice PSI (Ψ) - effetti casuali</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>            (Intercept)        x1        x2
-(Intercept)   1.1787397 0.8732869 0.2495069
-x1            0.8732869 1.2482397 0.1321032
-x2            0.2495069 0.1321032 1.0871345</code></pre>
+<pre><code>            (Intercept)         x1         x2
+(Intercept)  0.90918802 0.02800478 0.01852495
+x1           0.02800478 0.98446597 0.12092732
+x2           0.01852495 0.12092732 0.45868029</code></pre>
 </div>
 </div>
 
@@ -3922,9 +3930,8 @@ x2            0.2495069 0.1321032 1.0871345</code></pre>
 </div></div></section>
 <section id="lettura-output" class="level2">
 <h2 class="anchored" data-anchor-id="lettura-output">Lettura output</h2>
-<ul>
-<li>Regressione lineare</li>
-</ul>
+<section id="regressione-lineare" class="level3">
+<h3 class="anchored">Regressione lineare</h3>
 <style>
 .flex-container {
 display: flex;
@@ -3999,9 +4006,9 @@ Mostra interpretazione dettagliata
 </div>
  </div>
 </div>
-<ul>
-<li>Analisi della varianza</li>
-</ul>
+</section>
+<section id="analisi-della-varianza" class="level3">
+<h3 class="anchored">Analisi della varianza</h3>
 <style>
 .flex-container {
 display: flex;
@@ -4072,9 +4079,9 @@ Mostra interpretazione dettagliata
 </div>
  </div>
 </div>
-<ul>
-<li>Confronto tra modelli (AIC)</li>
-</ul>
+</section>
+<section id="confronto-tra-modelli-aic" class="level3">
+<h3 class="anchored">Confronto tra modelli (AIC)</h3>
 <style>
 .flex-container {
 display: flex;
@@ -4158,9 +4165,9 @@ Mostra interpretazione dettagliata
 </div>
  </div>
 </div>
-<ul>
-<li>Chisq Test per modelli annidati</li>
-</ul>
+</section>
+<section id="chisq-test-per-modelli-annidati" class="level3">
+<h3 class="anchored">Chisq Test per modelli annidati</h3>
 <style>
 .flex-container {
 display: flex;
@@ -4238,9 +4245,9 @@ Mostra interpretazione dettagliata
 </div>
  </div>
 </div>
-<ul>
-<li>Bayes Factor Analysis</li>
-</ul>
+</section>
+<section id="bayes-factor-analysis" class="level3">
+<h3 class="anchored">Bayes Factor Analysis</h3>
 <style>
 .flex-container {
 display: flex;
@@ -4313,9 +4320,9 @@ Mostra interpretazione dettagliata
 </div>
  </div>
 </div>
-<ul>
-<li>Log Relative Evidence tra modelli (Bayes Factor)</li>
-</ul>
+</section>
+<section id="log-relative-evidence-tra-modelli-bayes-factor" class="level3">
+<h3 class="anchored">Log Relative Evidence tra modelli (Bayes Factor)</h3>
 <style>
 .flex-container {
 display: flex;
@@ -4376,6 +4383,7 @@ Mostra interpretazione dettagliata
 </div>
  </div>
 </div>
+</section>
 </section>
 
 </main>
