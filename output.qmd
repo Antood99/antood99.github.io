@@ -193,7 +193,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 ## Interpretazione test parametrici
 
 | **Test** | **Tipo di Dato** | **Assunti** | **Verifica Assunti** | **Interpretazione (p-value)** |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 | t-test indipendenti | Continua | Normalità, omogeneità varianze, indipendenza | Shapiro-Wilk, Levene | p \< 0.05: differenza tra gruppi |
 | t-test appaiati | Continua (paired) | Normalità delle differenze | Shapiro-Wilk su differenze | p \< 0.05: differenza tra condizioni |
 | ANOVA a una via | Continua + gruppi | Normalità, omogeneità varianze, indipendenza | Shapiro-Wilk, Levene, Bartlett | p \< 0.05: almeno un gruppo differente |
@@ -207,7 +207,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 ## Interpretazione test NON parametrici
 
 | **Test** | **Tipo di Dato** | **Assunti** | **Verifica Assunti** | **Interpretazione (p-value)** |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 | Mann-Whitney U | Ordinale o continua non normale | Forma simile distribuzioni, indipendenza | Boxplot, istogrammi | p \< 0.05: distribuzioni significativamente diverse |
 | Wilcoxon signed-rank | Paired non normali | Simmetria differenze, osservazioni appaiate | Boxplot delle differenze | p \< 0.05: differenza significativa tra condizioni |
 | Kruskal-Wallis | Ordinale / continua | Forma simile, indipendenza | Istogrammi, boxplot | p \< 0.05: almeno un gruppo differente |
@@ -221,7 +221,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 ## Interpretazione test per assunti
 
 | **Test** | **Assunto** | **Uso** | **Interpretazione (p-value)** |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Shapiro-Wilk / Kolmogorov | Normalità | Normalità delle variabili o residui | p \< 0.05: dati NON normali |
 | Levene / Bartlett | Omogeneità varianze | Test ANOVA, t-test indipendenti | p \< 0.05: varianze NON omogenee |
 | Mauchly | Sfericità | Misure ripetute | p \< 0.05: sfericità VIOLATA |
@@ -234,7 +234,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 🔹 Formula del modello: `y ~ x + ( ? | gruppo )`
 
 | Specifica nella formula | Intercette variabili? | Pendenze variabili? | Tipo di grafico |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | `(1 | gruppo)` | ✅ Sì | ❌ No | **Intercette variabili** |
 | `(0 + x | gruppo)` | ❌ No | ✅ Sì | **Solo pendenze variabili (senza shift)** |
 | `(1 + x | gruppo)` | ✅ Sì | ✅ Sì | **Intercette e pendenze variabili** |
@@ -1210,7 +1210,7 @@ Il diagramma SEM visualizzato rappresenta una struttura di relazioni tra **varia
 ## Tipologie di variabili
 
 | Tipo di variabile | Caratteristiche | Esempi |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Esogena** | Non è spiegata da altre variabili nel modello | Età, Sesso, Condizione sperimentale |
 | **Endogena** | È spiegata da almeno una variabile nel modello | Depressione, Stress, Prestazione |
 

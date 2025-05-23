@@ -21,6 +21,7 @@ editor: visual
 ---
 
 ## Istogramma
+
 ```{=html}
 <style>
 .flex-container {
@@ -48,7 +49,6 @@ editor: visual
   <div class="flex-item card">
 ```
 
-
 ```{r}
 hist(mtcars$mpg,
      main = "Istogramma del Consumo (MPG)",
@@ -58,48 +58,51 @@ hist(mtcars$mpg,
 ```
 
 ::: tip
-
 #### 🧭 Come si legge un istogramma? – Guida schematica e utile
 
 #### ✅ 1. **Leggi gli assi**
-- **Asse X (orizzontale)**: rappresenta gli **intervalli dei valori** della variabile (es. consumo, età, punteggi).
-- **Asse Y (verticale)**: mostra la **frequenza** (quante osservazioni cadono in ciascun intervallo).
+
+-   **Asse X (orizzontale)**: rappresenta gli **intervalli dei valori** della variabile (es. consumo, età, punteggi).
+-   **Asse Y (verticale)**: mostra la **frequenza** (quante osservazioni cadono in ciascun intervallo).
 
 #### ✅ 2. **Osserva la forma generale**
-- **Simmetrica** → distribuzione equilibrata intorno alla media.
-- **Asimmetrica a destra** → pochi valori molto alti (coda lunga a destra).
-- **Asimmetrica a sinistra** → pochi valori molto bassi.
-- **A campana** → simile a una distribuzione normale.
-- **Multimodale** → più picchi = possibili gruppi o sottocategorie.
+
+-   **Simmetrica** → distribuzione equilibrata intorno alla media.
+-   **Asimmetrica a destra** → pochi valori molto alti (coda lunga a destra).
+-   **Asimmetrica a sinistra** → pochi valori molto bassi.
+-   **A campana** → simile a una distribuzione normale.
+-   **Multimodale** → più picchi = possibili gruppi o sottocategorie.
 
 #### ✅ 3. **Identifica la modalità**
-- La **barra più alta** mostra l’intervallo **più frequente**.
-- Ti dà un’indicazione della **tendenza centrale**.
+
+-   La **barra più alta** mostra l’intervallo **più frequente**.
+-   Ti dà un’indicazione della **tendenza centrale**.
 
 #### ✅ 4. **Analizza la dispersione**
-- **Barre distribuite su intervalli ampi** → alta variabilità nei dati.
-- **Barre concentrate in uno stretto intervallo** → bassa variabilità.
+
+-   **Barre distribuite su intervalli ampi** → alta variabilità nei dati.
+-   **Barre concentrate in uno stretto intervallo** → bassa variabilità.
 
 #### ✅ 5. **Cerca outlier o code**
-- **Barre isolate** → possibili **valori anomali (outlier)**.
-- **Code lunghe** → valori estremi meno frequenti.
 
----
+-   **Barre isolate** → possibili **valori anomali (outlier)**.
+-   **Code lunghe** → valori estremi meno frequenti.
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Aspetto                  | Cosa guardare                       | Cosa indica                              |
-|--------------------------|-------------------------------------|-------------------------------------------|
-| **Asse X**               | Intervalli della variabile          | Cosa stai misurando                       |
-| **Asse Y**               | Altezza delle barre                 | Frequenza delle osservazioni              |
-| **Barra più alta**       | Valore/modo più frequente           | Tendenza centrale                         |
-| **Forma simmetrica o no**| Asimmetria o code                   | Squilibri, outlier                        |
-| **Larghezza complessiva**| Base dell’istogramma                | Variazione/dispersione nei dati           |
-
+| Aspetto | Cosa guardare | Cosa indica |
+|----|----|----|
+| **Asse X** | Intervalli della variabile | Cosa stai misurando |
+| **Asse Y** | Altezza delle barre | Frequenza delle osservazioni |
+| **Barra più alta** | Valore/modo più frequente | Tendenza centrale |
+| **Forma simmetrica o no** | Asimmetria o code | Squilibri, outlier |
+| **Larghezza complessiva** | Base dell’istogramma | Variazione/dispersione nei dati |
 :::
 
-
 ## Boxplot
+
 ```{=html}
 <style>
 .flex-container {
@@ -136,44 +139,46 @@ boxplot(mpg ~ as.factor(cyl), data = mtcars,
 ```
 
 ::: tip
-
 #### 📦 Come si legge un boxplot? – Guida schematica e utile
 
 #### ✅ 1. **Comprendi gli elementi base**
-- **Linea centrale nella scatola**: è la **mediana** (valore centrale).
-- **Bordi della scatola (box)**: indicano il **1° quartile (Q1)** e il **3° quartile (Q3)** → contengono il 50% centrale dei dati.
-- **"Whiskers" (linee esterne)**: si estendono fino ai dati **non considerati outlier**, solitamente entro 1.5 × IQR.
-- **Punti isolati fuori dai whiskers**: sono **outlier** (valori anomali).
+
+-   **Linea centrale nella scatola**: è la **mediana** (valore centrale).
+-   **Bordi della scatola (box)**: indicano il **1° quartile (Q1)** e il **3° quartile (Q3)** → contengono il 50% centrale dei dati.
+-   **"Whiskers" (linee esterne)**: si estendono fino ai dati **non considerati outlier**, solitamente entro 1.5 × IQR.
+-   **Punti isolati fuori dai whiskers**: sono **outlier** (valori anomali).
 
 #### ✅ 2. **Valuta la simmetria**
-- Se la mediana è **centrata nella scatola** e i whisker sono di lunghezza simile → distribuzione **simmetrica**.
-- Se la mediana è **spostata** o un whisker è molto più lungo → **asimmetria**.
+
+-   Se la mediana è **centrata nella scatola** e i whisker sono di lunghezza simile → distribuzione **simmetrica**.
+-   Se la mediana è **spostata** o un whisker è molto più lungo → **asimmetria**.
 
 #### ✅ 3. **Analizza la dispersione**
-- **Larghezza della scatola (Q3 - Q1)** = **Intervallo Interquartile (IQR)** → misura la **variabilità centrale** dei dati.
-- **Whisker lunghi** → valori più dispersi.
-- **Whisker corti** → valori più concentrati.
+
+-   **Larghezza della scatola (Q3 - Q1)** = **Intervallo Interquartile (IQR)** → misura la **variabilità centrale** dei dati.
+-   **Whisker lunghi** → valori più dispersi.
+-   **Whisker corti** → valori più concentrati.
 
 #### ✅ 4. **Individua gli outlier**
-- Punti fuori dai whiskers → **valori estremi**.
-- Importante valutarli nel contesto: errori? valori reali ma rari?
 
----
+-   Punti fuori dai whiskers → **valori estremi**.
+-   Importante valutarli nel contesto: errori? valori reali ma rari?
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Elemento         | Cosa rappresenta                        | Cosa ci dice                             |
-|------------------|------------------------------------------|-------------------------------------------|
-| **Linea centrale** | Mediana                                 | Tendenza centrale                         |
-| **Box (Q1 - Q3)** | Intervallo interquartile (IQR)           | Variabilità centrale                      |
-| **Whiskers**      | Dati non-outlier                         | Dispersione esterna                       |
-| **Outlier**       | Valori fuori da 1.5 × IQR                | Valori estremi (da approfondire)          |
-| **Simmetria**     | Posizione mediana e lunghezza whiskers   | Forma della distribuzione (asimmetrie)    |
-
+| Elemento | Cosa rappresenta | Cosa ci dice |
+|----|----|----|
+| **Linea centrale** | Mediana | Tendenza centrale |
+| **Box (Q1 - Q3)** | Intervallo interquartile (IQR) | Variabilità centrale |
+| **Whiskers** | Dati non-outlier | Dispersione esterna |
+| **Outlier** | Valori fuori da 1.5 × IQR | Valori estremi (da approfondire) |
+| **Simmetria** | Posizione mediana e lunghezza whiskers | Forma della distribuzione (asimmetrie) |
 :::
 
-
 ## Violin Plot
+
 ```{=html}
 <style>
 .flex-container {
@@ -209,44 +214,47 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
   labs(title = "Violin Plot: MPG per Cilindri",
        x = "Cilindri", y = "MPG")
 ```
-::: tip
 
+::: tip
 #### 🎻 Come si legge un violin plot? – Guida schematica e utile
 
 #### ✅ 1. **Interpreta le componenti**
-- **Forma a “violino”**: rappresenta la **distribuzione dei dati** tramite una curva di densità speculare.
-- **Larghezza** in ciascun punto verticale: indica **quanto sono frequenti i valori** in quell’intervallo.
-- **Linea interna o box centrale** (opzionale): include **mediana** e **intervallo interquartile (IQR)**, come in un boxplot.
+
+-   **Forma a “violino”**: rappresenta la **distribuzione dei dati** tramite una curva di densità speculare.
+-   **Larghezza** in ciascun punto verticale: indica **quanto sono frequenti i valori** in quell’intervallo.
+-   **Linea interna o box centrale** (opzionale): include **mediana** e **intervallo interquartile (IQR)**, come in un boxplot.
 
 #### ✅ 2. **Valuta la densità**
-- Le **zone più larghe** rappresentano **concentrazioni di dati**.
-- Le **zone più strette** indicano valori meno frequenti.
-- A differenza del boxplot, la distribuzione non è limitata a una forma rettangolare → puoi vedere la **forma reale della distribuzione**.
+
+-   Le **zone più larghe** rappresentano **concentrazioni di dati**.
+-   Le **zone più strette** indicano valori meno frequenti.
+-   A differenza del boxplot, la distribuzione non è limitata a una forma rettangolare → puoi vedere la **forma reale della distribuzione**.
 
 #### ✅ 3. **Analizza la simmetria**
-- Se le due metà del violino sono **simmetriche** → distribuzione bilanciata.
-- Se una metà è più larga o più lunga → **asimmetria**.
+
+-   Se le due metà del violino sono **simmetriche** → distribuzione bilanciata.
+-   Se una metà è più larga o più lunga → **asimmetria**.
 
 #### ✅ 4. **Combina con il boxplot interno**
-- Se presente, il **box centrale** fornisce la **mediana** e il **range interquartile**.
-- Aiuta a confrontare **forma e centro della distribuzione** contemporaneamente.
 
----
+-   Se presente, il **box centrale** fornisce la **mediana** e il **range interquartile**.
+-   Aiuta a confrontare **forma e centro della distribuzione** contemporaneamente.
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Elemento               | Cosa rappresenta                        | Cosa ci dice                              |
-|------------------------|------------------------------------------|--------------------------------------------|
-| **Larghezza del violino** | Densità di dati in ogni intervallo     | Frequenza relativa                         |
-| **Forma complessiva**     | Distribuzione                         | Simmetria, multimodalità                   |
-| **Box centrale (se presente)** | Mediana + IQR                   | Tendenza centrale e variabilità            |
-| **Estremità del violino**  | Code della distribuzione              | Valori estremi (non necessariamente outlier) |
-| **Asimmetria visiva**     | Differenza tra le due metà            | Squilibri nei dati                         |
-
+| Elemento | Cosa rappresenta | Cosa ci dice |
+|----|----|----|
+| **Larghezza del violino** | Densità di dati in ogni intervallo | Frequenza relativa |
+| **Forma complessiva** | Distribuzione | Simmetria, multimodalità |
+| **Box centrale (se presente)** | Mediana + IQR | Tendenza centrale e variabilità |
+| **Estremità del violino** | Code della distribuzione | Valori estremi (non necessariamente outlier) |
+| **Asimmetria visiva** | Differenza tra le due metà | Squilibri nei dati |
 :::
 
-
 ## QQ plot
+
 ```{=html}
 <style>
 .flex-container {
@@ -274,7 +282,6 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
   <div class="flex-item card">
 ```
 
-
 ```{r}
 qqnorm(mtcars$mpg,
        main = "QQ-Plot per MPG")
@@ -282,45 +289,48 @@ qqline(mtcars$mpg, col = "red")
 ```
 
 ::: tip
-
 #### 📈 Come si legge un Q-Q plot? – Guida schematica e utile
 
 #### ✅ 1. **Cos’è un Q-Q plot?**
-- Un **Q-Q plot** confronta i **quantili di una variabile osservata** con i **quantili di una distribuzione teorica** (di solito **normale**).
-- Serve per **verificare se i dati seguono una certa distribuzione**.
+
+-   Un **Q-Q plot** confronta i **quantili di una variabile osservata** con i **quantili di una distribuzione teorica** (di solito **normale**).
+-   Serve per **verificare se i dati seguono una certa distribuzione**.
 
 #### ✅ 2. **Leggi l’asse X e Y**
-- **Asse X**: quantili attesi (dalla distribuzione teorica).
-- **Asse Y**: quantili osservati (dai tuoi dati).
 
----
+-   **Asse X**: quantili attesi (dalla distribuzione teorica).
+-   **Asse Y**: quantili osservati (dai tuoi dati).
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Interpreta l’allineamento**
-- Se i punti stanno **sulla linea diagonale** (linea di riferimento) → i dati **seguono la distribuzione teorica** (es. distribuzione normale).
-- Se i punti **deviano dalla linea** → i dati **non seguono la distribuzione attesa**.
 
----
+-   Se i punti stanno **sulla linea diagonale** (linea di riferimento) → i dati **seguono la distribuzione teorica** (es. distribuzione normale).
+-   Se i punti **deviano dalla linea** → i dati **non seguono la distribuzione attesa**.
+
+------------------------------------------------------------------------
 
 #### ✅ 4. **Analizza le deviazioni**
-- **Deviazione in alto o in basso alle estremità** → i dati hanno **code più pesanti o leggere** rispetto alla distribuzione teorica.
-- **Curvatura a S o a gomito** → indica **asimmetria** o **skewness**:
-  - Curva **a S (convessa-concava)** → coda lunga a destra (**asimmetria positiva**).
-  - Curva **a gomito (concava-convessa)** → coda lunga a sinistra (**asimmetria negativa**).
 
----
+-   **Deviazione in alto o in basso alle estremità** → i dati hanno **code più pesanti o leggere** rispetto alla distribuzione teorica.
+-   **Curvatura a S o a gomito** → indica **asimmetria** o **skewness**:
+    -   Curva **a S (convessa-concava)** → coda lunga a destra (**asimmetria positiva**).
+    -   Curva **a gomito (concava-convessa)** → coda lunga a sinistra (**asimmetria negativa**).
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Aspetto                      | Cosa osservare                          | Cosa indica                             |
-|------------------------------|------------------------------------------|------------------------------------------|
-| **Allineamento dei punti**   | Segue la linea diagonale                | I dati seguono la distribuzione teorica  |
-| **Deviazione alle estremità**| Code più o meno pesanti                 | Differenze nella coda                    |
-| **Curvatura dei punti**      | Forma a S o a gomito                    | Asimmetria (skewness)                    |
-| **Distribuzione di confronto** | Di solito normale (ma può variare)   | Deve essere nota per interpretare correttamente |
-
+| Aspetto | Cosa osservare | Cosa indica |
+|----|----|----|
+| **Allineamento dei punti** | Segue la linea diagonale | I dati seguono la distribuzione teorica |
+| **Deviazione alle estremità** | Code più o meno pesanti | Differenze nella coda |
+| **Curvatura dei punti** | Forma a S o a gomito | Asimmetria (skewness) |
+| **Distribuzione di confronto** | Di solito normale (ma può variare) | Deve essere nota per interpretare correttamente |
 :::
 
 ## Scatter-plot
+
 ```{=html}
 <style>
 .flex-container {
@@ -357,57 +367,60 @@ plot(mtcars$hp, mtcars$mpg,
      col = "darkgreen")
 ```
 
-
 ::: tip
-
 #### 🔵 Come si legge uno scatterplot? – Guida schematica e utile
 
 #### ✅ 1. **Cosa mostra uno scatterplot?**
-- Ogni punto rappresenta **una coppia di valori** per due variabili quantitative (X e Y).
-- Serve a visualizzare **relazioni, tendenze e correlazioni** tra due variabili.
 
----
+-   Ogni punto rappresenta **una coppia di valori** per due variabili quantitative (X e Y).
+-   Serve a visualizzare **relazioni, tendenze e correlazioni** tra due variabili.
+
+------------------------------------------------------------------------
 
 #### ✅ 2. **Leggi gli assi**
-- **Asse X (orizzontale)**: variabile indipendente (predictor).
-- **Asse Y (verticale)**: variabile dipendente (risposta).
 
----
+-   **Asse X (orizzontale)**: variabile indipendente (predictor).
+-   **Asse Y (verticale)**: variabile dipendente (risposta).
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Osserva la tendenza generale**
-- **Andamento crescente (↗)**: **correlazione positiva** → all’aumentare di X, aumenta anche Y.
-- **Andamento decrescente (↘)**: **correlazione negativa** → all’aumentare di X, Y diminuisce.
-- **Nessun andamento visibile**: **assenza di correlazione** → i dati sono sparsi casualmente.
 
----
+-   **Andamento crescente (↗)**: **correlazione positiva** → all’aumentare di X, aumenta anche Y.
+-   **Andamento decrescente (↘)**: **correlazione negativa** → all’aumentare di X, Y diminuisce.
+-   **Nessun andamento visibile**: **assenza di correlazione** → i dati sono sparsi casualmente.
+
+------------------------------------------------------------------------
 
 #### ✅ 4. **Valuta la forza della relazione**
-- **Punti vicini a una linea ideale** → relazione forte.
-- **Punti molto dispersi** → relazione debole.
-- La forza può essere valutata visivamente o con il coefficiente di correlazione.
 
----
+-   **Punti vicini a una linea ideale** → relazione forte.
+-   **Punti molto dispersi** → relazione debole.
+-   La forza può essere valutata visivamente o con il coefficiente di correlazione.
+
+------------------------------------------------------------------------
 
 #### ✅ 5. **Cerca pattern o anomalie**
-- **Gruppi separati** → possibili sottogruppi (cluster).
-- **Andamenti curvi/non lineari** → possibile **relazione non lineare**.
-- **Punti lontani dalla nuvola** → **outlier** (valori anomali).
 
----
+-   **Gruppi separati** → possibili sottogruppi (cluster).
+-   **Andamenti curvi/non lineari** → possibile **relazione non lineare**.
+-   **Punti lontani dalla nuvola** → **outlier** (valori anomali).
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Aspetto                  | Cosa osservare                      | Cosa indica                              |
-|--------------------------|--------------------------------------|-------------------------------------------|
-| **Distribuzione dei punti** | Densità, forma, direzione          | Tipo di relazione (positiva, negativa, nulla) |
-| **Linearità**             | Allineamento lungo una retta        | Relazione lineare                         |
-| **Dispersione**           | Vicinanza dei punti                 | Forza della correlazione                  |
-| **Outlier**               | Punti isolati                       | Valori anomali da approfondire            |
-| **Pattern insoliti**      | Curve, gruppi, archi                | Relazioni non lineari o sottogruppi       |
-
+| Aspetto | Cosa osservare | Cosa indica |
+|----|----|----|
+| **Distribuzione dei punti** | Densità, forma, direzione | Tipo di relazione (positiva, negativa, nulla) |
+| **Linearità** | Allineamento lungo una retta | Relazione lineare |
+| **Dispersione** | Vicinanza dei punti | Forza della correlazione |
+| **Outlier** | Punti isolati | Valori anomali da approfondire |
+| **Pattern insoliti** | Curve, gruppi, archi | Relazioni non lineari o sottogruppi |
 :::
 
 ## Residual plot
+
 ```{=html}
 <style>
 .flex-container {
@@ -447,52 +460,55 @@ abline(h = 0, col = "red", lty = 2)
 ```
 
 ::: tip
-
 #### ♻️ Come si legge un residual plot? – Guida schematica e utile
 
 #### ✅ 1. **Cos’è un residual plot?**
-- Mostra i **residui** (errori) di un modello di regressione → la differenza tra i valori osservati e quelli previsti.
-- Asse X: valori **predetti** dal modello.
-- Asse Y: **residui** (valori osservati − valori predetti).
 
----
+-   Mostra i **residui** (errori) di un modello di regressione → la differenza tra i valori osservati e quelli previsti.
+-   Asse X: valori **predetti** dal modello.
+-   Asse Y: **residui** (valori osservati − valori predetti).
+
+------------------------------------------------------------------------
 
 #### ✅ 2. **Obiettivo principale**
-- Verificare se i **presupposti della regressione** sono soddisfatti:
-  - Linearità
-  - Omoscedasticità (varianza costante)
-  - Assenza di pattern sistematici
 
----
+-   Verificare se i **presupposti della regressione** sono soddisfatti:
+    -   Linearità
+    -   Omoscedasticità (varianza costante)
+    -   Assenza di pattern sistematici
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Cosa cercare**
 
-| Pattern                         | Interpretazione                                          |
-|----------------------------------|-----------------------------------------------------------|
-| **Punti distribuiti a caso**     | ✅ Il modello è adeguato (errori casuali, omoscedastici). |
-| **Forma a U o curva**            | ❌ Mancanza di linearità → forse serve un modello non lineare. |
-| **Funnel (apertura/chiusura)**   | ❌ Eteroschedasticità → la varianza degli errori cambia. |
-| **Punti molto distanti**         | ❗ Outlier nei residui → possibili casi problematici.      |
+| Pattern | Interpretazione |
+|----|----|
+| **Punti distribuiti a caso** | ✅ Il modello è adeguato (errori casuali, omoscedastici). |
+| **Forma a U o curva** | ❌ Mancanza di linearità → forse serve un modello non lineare. |
+| **Funnel (apertura/chiusura)** | ❌ Eteroschedasticità → la varianza degli errori cambia. |
+| **Punti molto distanti** | ❗ Outlier nei residui → possibili casi problematici. |
 
----
+------------------------------------------------------------------------
 
 #### ✅ 4. **Cosa idealmente si vuole vedere**
-- Una **nuvola di punti** distribuita **in modo casuale** attorno alla linea orizzontale **y = 0**.
-- Nessun pattern evidente → i residui sono indipendenti e distribuiti normalmente con media zero.
 
----
+-   Una **nuvola di punti** distribuita **in modo casuale** attorno alla linea orizzontale **y = 0**.
+-   Nessun pattern evidente → i residui sono indipendenti e distribuiti normalmente con media zero.
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Aspetto                      | Cosa osservare                          | Cosa indica                               |
-|------------------------------|------------------------------------------|--------------------------------------------|
-| **Dispersione casuale**      | Punti sparsi intorno a y = 0            | Buon modello lineare                       |
-| **Pattern curvo o forma a U**| Trend sistematici nei residui           | Relazione non lineare                      |
-| **Funnel (cono aperto/chiuso)** | Varianza non costante                 | Eteroschedasticità                         |
-| **Outlier nei residui**      | Punti molto distanti                    | Osservazioni anomale o influenti           |
+| Aspetto | Cosa osservare | Cosa indica |
+|----|----|----|
+| **Dispersione casuale** | Punti sparsi intorno a y = 0 | Buon modello lineare |
+| **Pattern curvo o forma a U** | Trend sistematici nei residui | Relazione non lineare |
+| **Funnel (cono aperto/chiuso)** | Varianza non costante | Eteroschedasticità |
+| **Outlier nei residui** | Punti molto distanti | Osservazioni anomale o influenti |
 :::
 
 ## Boxplot per residui gruppi
+
 ```{=html}
 <style>
 .flex-container {
@@ -529,54 +545,56 @@ boxplot(residuals(model) ~ mtcars$cyl,
 ```
 
 ::: tip
-
 #### 📦📊 Come si leggono i boxplot dei residui per gruppi? – Guida schematica e utile
 
 #### ✅ 1. **Cosa mostrano questi boxplot?**
-- Confrontano la **distribuzione dei residui** tra diversi **gruppi** (es. trattamenti, categorie).
-- Ogni box rappresenta **la variabilità degli errori** del modello **all’interno di un gruppo**.
 
----
+-   Confrontano la **distribuzione dei residui** tra diversi **gruppi** (es. trattamenti, categorie).
+-   Ogni box rappresenta **la variabilità degli errori** del modello **all’interno di un gruppo**.
+
+------------------------------------------------------------------------
 
 #### ✅ 2. **Obiettivo principale**
-- Valutare se il modello **si comporta in modo coerente tra i gruppi**:
-  - Varianza simile? → ok
-  - Mediana dei residui ≈ 0? → ok
-  - Outlier concentrati in certi gruppi? → potenziale problema
 
----
+-   Valutare se il modello **si comporta in modo coerente tra i gruppi**:
+    -   Varianza simile? → ok
+    -   Mediana dei residui ≈ 0? → ok
+    -   Outlier concentrati in certi gruppi? → potenziale problema
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Cosa osservare nei boxplot**
 
-| Osservazione                         | Interpretazione                                       |
-|--------------------------------------|--------------------------------------------------------|
-| ✅ **Box simili in tutti i gruppi**   | Residui distribuiti in modo coerente → modello stabile |
-| ✅ **Mediane vicine a 0**             | Il modello **non sovrastima né sottostima** i gruppi   |
-| ❌ **Box molto diversi tra gruppi**   | **Eteroschedasticità** → varianza non costante         |
-| ❌ **Mediane lontane da 0**           | **Sistematici errori di stima** per alcuni gruppi      |
-| ❗ **Molti outlier in un gruppo**     | Dati problematici o mal modellati                      |
+| Osservazione | Interpretazione |
+|----|----|
+| ✅ **Box simili in tutti i gruppi** | Residui distribuiti in modo coerente → modello stabile |
+| ✅ **Mediane vicine a 0** | Il modello **non sovrastima né sottostima** i gruppi |
+| ❌ **Box molto diversi tra gruppi** | **Eteroschedasticità** → varianza non costante |
+| ❌ **Mediane lontane da 0** | **Sistematici errori di stima** per alcuni gruppi |
+| ❗ **Molti outlier in un gruppo** | Dati problematici o mal modellati |
 
----
+------------------------------------------------------------------------
 
 #### ✅ 4. **Quando è utile usarli?**
-- Dopo aver adattato un modello lineare con **variabili categoriali**.
-- Per controllare **presupposti di omoscedasticità** (es. ANOVA, regressione con fattori).
-- Per rilevare **bias o incoerenze tra gruppi**.
 
----
+-   Dopo aver adattato un modello lineare con **variabili categoriali**.
+-   Per controllare **presupposti di omoscedasticità** (es. ANOVA, regressione con fattori).
+-   Per rilevare **bias o incoerenze tra gruppi**.
+
+------------------------------------------------------------------------
 
 ### 📌 Riepilogo – Schema utile
 
-| Aspetto                     | Cosa osservare                     | Cosa indica                               |
-|-----------------------------|-------------------------------------|--------------------------------------------|
-| **Varianza dei box**        | Simile tra gruppi                  | Omogeneità delle varianze (buono)          |
-| **Mediana**                 | Vicina a 0 in ogni gruppo          | Nessun bias sistematico                    |
-| **Outlier**                 | Concentrati in pochi gruppi        | Possibili anomalie                         |
-| **Differenze forti nei box**| Modello si adatta diversamente     | Violazione presupposti del modello         |
-
+| Aspetto | Cosa osservare | Cosa indica |
+|----|----|----|
+| **Varianza dei box** | Simile tra gruppi | Omogeneità delle varianze (buono) |
+| **Mediana** | Vicina a 0 in ogni gruppo | Nessun bias sistematico |
+| **Outlier** | Concentrati in pochi gruppi | Possibili anomalie |
+| **Differenze forti nei box** | Modello si adatta diversamente | Violazione presupposti del modello |
 :::
 
 ## Diagnostica dei modelli
+
 ```{=html}
 <style>
 .flex-container {
@@ -612,39 +630,43 @@ model <- lm(mpg ~ hp + wt, data = mtcars)
 
 check_model(model)
 ```
-::: tip
 
+::: tip
 #### 🧾 Interpretazione dei grafici diagnostici – `check_model()`
 
 #### ✅ 1. **Residuals vs Fitted**
-- **Distribuzione casuale** attorno alla linea orizzontale indica:
-  - Corretta specificazione del modello
-  - Varianza costante (omoschedasticità)
-- **Pattern (curve, funnel)** → possibile violazione di linearità o eteroschedasticità.
 
----
+-   **Distribuzione casuale** attorno alla linea orizzontale indica:
+    -   Corretta specificazione del modello
+    -   Varianza costante (omoschedasticità)
+-   **Pattern (curve, funnel)** → possibile violazione di linearità o eteroschedasticità.
+
+------------------------------------------------------------------------
 
 #### ✅ 2. **Q-Q Plot dei residui**
-- **Punti allineati alla diagonale** → i residui seguono una distribuzione normale.
-- **Deviazioni marcate alle estremità** → possibili problemi di normalità (code pesanti o leggere).
 
----
+-   **Punti allineati alla diagonale** → i residui seguono una distribuzione normale.
+-   **Deviazioni marcate alle estremità** → possibili problemi di normalità (code pesanti o leggere).
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Scale-Location (Spread vs Fitted)**
-- Verifica la **costanza della varianza dei residui**.
-- **Dispersione uniforme** → ok.
-- **Funnel o variazioni di ampiezza** → eteroschedasticità.
 
----
+-   Verifica la **costanza della varianza dei residui**.
+-   **Dispersione uniforme** → ok.
+-   **Funnel o variazioni di ampiezza** → eteroschedasticità.
+
+------------------------------------------------------------------------
 
 #### ✅ 4. **Residuals vs Leverage**
-- Identifica **osservazioni influenti**.
-- Punti con **alto leverage e residui grandi** → potrebbero avere **impatto eccessivo** sul modello.
-- Da esaminare singolarmente (possibili outlier o errori).
 
+-   Identifica **osservazioni influenti**.
+-   Punti con **alto leverage e residui grandi** → potrebbero avere **impatto eccessivo** sul modello.
+-   Da esaminare singolarmente (possibili outlier o errori).
 :::
 
 ## Predicted vs Actual
+
 ```{=html}
 <style>
 .flex-container {
@@ -683,38 +705,39 @@ abline(a = 0, b = 1, col = "red", lty = 2)
 ```
 
 ::: tip
-
 #### 🔮 Interpretazione del grafico Predicted vs Actual
 
 #### ✅ 1. **Cosa mostra questo grafico?**
-- Confronta i **valori previsti dal modello** (asse X) con i **valori osservati reali** (asse Y).
-- Utile per valutare **l’accuratezza del modello**: quanto bene le previsioni replicano i dati osservati?
 
----
+-   Confronta i **valori previsti dal modello** (asse X) con i **valori osservati reali** (asse Y).
+-   Utile per valutare **l’accuratezza del modello**: quanto bene le previsioni replicano i dati osservati?
+
+------------------------------------------------------------------------
 
 #### ✅ 2. **Interpretazione ideale**
-- I punti **dovrebbero allinearsi lungo la diagonale** (linea y = x).
-- Una buona aderenza alla diagonale indica:
-  - Previsioni accurate
-  - Buona capacità del modello di rappresentare i dati reali
 
----
+-   I punti **dovrebbero allinearsi lungo la diagonale** (linea y = x).
+-   Una buona aderenza alla diagonale indica:
+    -   Previsioni accurate
+    -   Buona capacità del modello di rappresentare i dati reali
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Segnali da osservare**
 
-| Comportamento dei punti          | Cosa indica                              |
-|----------------------------------|-------------------------------------------|
+| Comportamento dei punti | Cosa indica |
+|----|----|
 | ✅ Allineamento lungo la diagonale | Previsioni vicine ai valori reali (ottimo) |
-| ❌ Deviazione sistematica         | Bias del modello (sottostima o sovrastima) |
-| ❌ Dispersione elevata            | Previsioni poco precise                   |
-| ❌ Pattern curvi o gruppi         | Modello mal specificato o relazioni non lineari |
+| ❌ Deviazione sistematica | Bias del modello (sottostima o sovrastima) |
+| ❌ Dispersione elevata | Previsioni poco precise |
+| ❌ Pattern curvi o gruppi | Modello mal specificato o relazioni non lineari |
 
----
+------------------------------------------------------------------------
 
 #### ✅ 4. **Quando usarlo?**
-- In ogni modello di regressione o predizione (lineare, logistico, machine learning).
-- Per valutare la **qualità globale delle previsioni**.
 
+-   In ogni modello di regressione o predizione (lineare, logistico, machine learning).
+-   Per valutare la **qualità globale delle previsioni**.
 :::
 
 ## Curva di potenza
@@ -745,7 +768,6 @@ abline(a = 0, b = 1, col = "red", lty = 2)
 <div class="flex-container">
   <div class="flex-item card">
 ```
-
 
 ```{r}
 
@@ -789,40 +811,42 @@ ggplot(df_power, aes(x = d, y = power)) +
 ```
 
 ::: tip
-
 #### ⚡ Interpretazione della Curva di Potenza (Power Curve)
 
 #### ✅ 1. **Cos’è la curva di potenza?**
-- Mostra come **la probabilità di rilevare un effetto reale** (potenza statistica) varia al cambiare della dimensione dell’effetto o del numero di osservazioni.
-- Asse X: **Dimensione dell’effetto** o **dimensione del campione (n)**
-- Asse Y: **Potenza statistica** (P = 1 - β), cioè la probabilità di **rifiutare correttamente H₀**.
 
----
+-   Mostra come **la probabilità di rilevare un effetto reale** (potenza statistica) varia al cambiare della dimensione dell’effetto o del numero di osservazioni.
+-   Asse X: **Dimensione dell’effetto** o **dimensione del campione (n)**
+-   Asse Y: **Potenza statistica** (P = 1 - β), cioè la probabilità di **rifiutare correttamente H₀**.
+
+------------------------------------------------------------------------
 
 #### ✅ 2. **Interpretazione dei valori**
-- Una potenza ≥ **0.80** (80%) è **considerata adeguata** → bassa probabilità di errore di tipo II.
-- Valori più bassi indicano **scarsa sensibilità del test** → alto rischio di non rilevare un effetto reale.
-- La curva mostra **quanta potenza si guadagna** aumentando il campione o l’effetto.
 
----
+-   Una potenza ≥ **0.80** (80%) è **considerata adeguata** → bassa probabilità di errore di tipo II.
+-   Valori più bassi indicano **scarsa sensibilità del test** → alto rischio di non rilevare un effetto reale.
+-   La curva mostra **quanta potenza si guadagna** aumentando il campione o l’effetto.
+
+------------------------------------------------------------------------
 
 #### ✅ 3. **Cosa osservare nella curva**
 
-| Forma della curva                 | Interpretazione                                      |
-|----------------------------------|------------------------------------------------------|
-| 📈 Curva crescente e appiattita  | All’aumentare di n, la potenza si stabilizza        |
-| 🎯 Punto in cui P ≈ 0.80         | Soglia ottimale per scegliere la dimensione campione |
-| ❗ Curva piatta a valori bassi   | Effetto troppo piccolo per essere rilevabile         |
+| Forma della curva | Interpretazione |
+|----|----|
+| 📈 Curva crescente e appiattita | All’aumentare di n, la potenza si stabilizza |
+| 🎯 Punto in cui P ≈ 0.80 | Soglia ottimale per scegliere la dimensione campione |
+| ❗ Curva piatta a valori bassi | Effetto troppo piccolo per essere rilevabile |
 
----
+------------------------------------------------------------------------
 
 #### ✅ 4. **Quando usarla?**
-- In fase di **pianificazione dello studio** → per determinare **quanti soggetti servono**.
-- Per verificare se un test ha **potenza sufficiente** a rilevare un effetto atteso.
 
----
+-   In fase di **pianificazione dello studio** → per determinare **quanti soggetti servono**.
+-   Per verificare se un test ha **potenza sufficiente** a rilevare un effetto atteso.
+
+------------------------------------------------------------------------
 
 ### 📌 Obiettivo finale
-- **Assicurarsi che il test abbia un’alta probabilità di successo**, evitando sprechi di risorse o conclusioni false negative.
 
+-   **Assicurarsi che il test abbia un’alta probabilità di successo**, evitando sprechi di risorse o conclusioni false negative.
 :::
