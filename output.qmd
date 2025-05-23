@@ -1,0 +1,1224 @@
+---
+title: "Analisi dei dati per la psicologia"
+subtitle: "Appunti utili"
+author: "Antonio Di Mauro"
+include-in-header: assets/header.html
+format:
+  html:
+    theme: cosmo
+    code-fold: false
+    self-contained: true
+    toc: true   
+    toc-depth: 3 
+    toc-expand: 3
+    message: false
+    css: "assets/custom.css"
+execute:
+  echo: false
+  warning: false
+  message: false
+editor: visual
+---
+
+## Indici di Statistica Inferenziale
+
+```{r}
+#| echo: false
+library(knitr)
+library(tibble)
+
+par(mfrow = c(1,4))
+indici <- tribble(
+  ~Nome, ~Simbolo, ~Formula, ~Descrizione, ~Interpretazione, ~Utilizzo,
+  "Eta quadrato", "$\\eta^2$", "$\\frac{SS_{\\text{effetto}}}{SS_{\\text{totale}}}$", "Quota di varianza spiegata da un effetto", "0.01 = piccolo, 0.06 = medio, 0.14+ = grande", "ANOVA, ANCOVA",
+  "R quadrato", "$R^2$", "$1 - \\frac{SS_{\\text{residuo}}}{SS_{\\text{totale}}}$", "Varianza spiegata dal modello", "0–1; più alto è meglio", "Regressione lineare",
+  "Correlazione", "$r$", "$\\frac{\\text{cov}(X,Y)}{\\sigma_X \\sigma_Y}$", "Relazione lineare tra due variabili", "-1 a +1", "Analisi bivariata",
+  "Cohen's d", "$d$", "$\\frac{\\bar{x}_1 - \\bar{x}_2}{s_p}$", "Differenza standardizzata tra due medie", "0.2 = piccolo, 0.5 = medio, 0.8+ = grande", "Test t, esperimenti",
+  "Test t", "$t$", "$\\frac{\\bar{x}_1 - \\bar{x}_2}{SE}$", "Confronto tra due medie", "Valori alti → significativi", "Inferenza su medie",
+  "Test F", "$F$", "$\\frac{MS_{\\text{modello}}}{MS_{\\text{errore}}}$", "Confronta varianze spiegate vs. non spiegate", ">1 e p < .05 → effetto significativo", "ANOVA, regressione",
+  "AIC", "AIC", "$2k - 2\\ln(L)$", "Bilancia adattamento e complessità", "Più basso = migliore", "Scelta tra modelli",
+  "BIC", "BIC", "$\\ln(n)k - 2\\ln(L)$", "Come AIC ma più penalizzante", "Più basso = preferito", "Modelli complessi",
+  "LOO-CV", "LOO", "Media log-verosimiglianze lasciando fuori 1 osservazione", "Validazione predittiva modello", "Più alto = migliore", "Bayes, modelli predittivi",
+  "Z-score", "$z$", "$\\frac{x - \\mu}{\\sigma}$", "Distanza standardizzata da media", "|z| > 1.96 → significativo", "Standardizzazione, normalità",
+  "p-value", "$p$", "-", "Probabilità di osservare un dato sotto $H_0$", "p < 0.05 → significativo", "Ogni test d'ipotesi",
+  "Alpha", "$\\alpha$", "-", "Soglia di significatività", "Tipicamente 0.05", "Decisione inferenziale",
+  "Bayes Factor", "$BF_{10}$", "$\\frac{P(D \\mid M_1)}{P(D \\mid M_0)}$", "Supporto relativo per $H_1$ contro $H_0$", ">1 = favorevole a $H_1$", "Statistica bayesiana",
+  "Deviance", "-", "$-2(\\log L_{\\text{modello}} - \\log L_{\\text{saturo}})$", "Misura bontà del fit nei GLM", "Più basso = meglio", "GLM, logistica, Poisson",
+  "WAIC", "WAIC", "Somma penalizzata di log-verosimiglianze", "Criterio bayesiano di selezione modelli", "Più basso = migliore", "Bayes",
+  "ICC", "ICC", "$\\frac{\\sigma^2_{tra}}{\\sigma^2_{tra} + \\sigma^2_{intra}}$", "Affidabilità intra-classe", "0–1; alto = coerente", "Psicometria, modelli misti"
+)
+
+kable(indici, caption = "Tabella degli indici statistici inferenziali", escape = FALSE)
+```
+
+## Distribuzione Normale
+
+```{r}
+#| echo: false
+#| warnings: false
+#| message: false
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+theme_set(theme_minimal())
+
+#Distribuzione Normale
+
+ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), color = "steelblue", size = 1) +
+  labs(title = "Distribuzione Normale Standard (μ = 0, σ = 1)",
+       y = "Densità", x = "Valori") +
+  geom_vline(xintercept = c(-1.96, 1.96), linetype = "dashed", color = "red") +
+  annotate("text", x = 2.2, y = 0.1, label = "Area ≈ 95%", color = "red")
+```
+
+```{r}
+#| echo: false
+library(knitr)
+library(tibble)
+par(mfrow = c(1,4))
+descrizione_1 <- tribble(
+~Proprietà, ~Dettaglio,
+"Simmetria", 	"Simmetrica rispetto alla media $\\mu$",
+"Unimodale"	,"Ha un solo picco (moda = media = mediana)",
+"Asintotica",	"Le code si avvicinano all'asse x ma non lo toccano mai",
+"Area totale sotto la curva",	"1", 
+"Percentili importanti"	,"68% dei dati entro 1σ, 95% entro 2σ, 99.7% entro 3σ (regola empirica)"
+)
+
+kable(descrizione_1, caption = "Proprietà della normale", escape = FALSE)
+```
+
+## Distribuzione t di Student
+
+```{r}
+#| echo: false
+# t di Student
+
+ggplot(data.frame(x = c(-5, 5)), aes(x)) +
+  stat_function(fun = dt, args = list(df = 5), aes(color = "df = 5"),  size = 1) +
+  stat_function(fun = dt, args = list(df = 30), aes(color = "df = 30"), size = 1) +
+  stat_function(fun = dnorm, aes(color = "Normale"), size = 1, linetype = "dotted") +
+  scale_color_manual(values = c("df = 5" = "orange", "df = 30" = "green", "Normale" = "gray")) +
+  labs(title = "Distribuzione t di Student", y = "Densità", x = "Valori", color = "Distribuzioni")
+```
+
+```{r}
+#| echo: false
+descrizione_2 <- tribble(
+~Proprietà,	~Dettaglio,
+"Simmetrica",	"È centrata su 0, come la normale",
+"Code più pesanti",	"Maggiore probabilità di valori estremi rispetto alla normale",
+"Dipende da $df = n-1$", "$df=n−1$	Gradi di libertà, variano con la dimensione del campione",
+"Converge alla normale",	"Per $( n \\to \\infty )$, la distribuzione t diventa una normale standard",
+"Varianza",	"non definita per $df \\leq 2$"
+)
+kable(descrizione_2, caption = "Proprietà della t di Student", escape = FALSE)
+```
+
+## Distribuzione F di Fisher
+
+```{r}
+#| echo: false
+
+# F di Fisher
+
+ggplot(data.frame(x = c(0, 5)), aes(x)) +
+  stat_function(fun = df, args = list(df1 = 5, df2 = 10), color = "darkred", size = 1) +
+  labs(title = "Distribuzione F (df1 = 5, df2 = 10)", x = "Valori", y = "Densità")
+```
+
+```{r}
+#| echo: false
+descrizione_3 <- tribble(
+  ~"Proprietà",              ~"Dettaglio",
+  "Dominio",                 "Solo valori positivi: $F ∈ [0, +∞)$",
+  "Asimmetrica",             "Ha una coda destra lunga, soprattutto per piccoli d.f.",
+  "Dipende da due d.f.",     "Numeratore $d_1$, denominatore $d_2$",
+  "Media",                   "$\\frac{d_2} {d_2 - 2}$, se $d_2 > 2$",
+  "Moda",                    "$\\frac {(d_1 - 2) d_2}{d_1 (d_2 + 2)}$, se $d_1 > 2$",
+  "Varianza",                "Formula complessa; esiste solo per $d_2 > 4$",
+  "Non simmetrica",          "Spostata a destra; con d.f. grandi tende alla distribuzione normale"
+)
+kable(descrizione_3, caption = "Proprietà della F di Fisher", escape = FALSE)
+
+```
+
+## Distribuzione Chi-quadrato
+
+```{r}
+#| echo: false
+# Chisq
+
+ggplot(data.frame(x = c(0, 20)), aes(x)) +
+  stat_function(fun = dchisq, args = list(df = 3), aes(color = "df = 3"), size = 1) +
+  stat_function(fun = dchisq, args = list(df = 10), aes(color = "df = 10"), size = 1) +
+  scale_color_manual(values = c("df = 3" = "purple", "df = 10" = "blue")) +
+  labs(title = "Distribuzione Chi-quadrato", y = "Densità", x = "Valori", color = "Gradi di libertà")
+
+```
+
+```{r}
+#| echo: false
+descrizione_4 <- tribble(
+  ~"Proprietà",              ~"Dettaglio",
+  "Dominio",                 "Solo valori positivi: $\\chi^2 \\in [0, +\\infty)$",
+  "Asimmetrica",             "Distribuzione asimmetrica a destra, più simmetrica all'aumentare dei gradi di libertà",
+  "Dipende da d.f.",         "Unico parametro: gradi di libertà $k$",
+  "Media",                   "$\\mu = k$",
+  "Varianza",                "$\\sigma^2 = 2k$",
+  "Moda",                    "$k - 2$, se $k \\geq 2$",
+  "Simmetria",               "Per $k > 30$ tende alla normale: $\\mathcal{N}(k, 2k)$",
+  "Somma di quadrati",       "$\\chi^2 = \\sum_{i=1}^{k} Z_i^2$, con $Z_i \\sim \\mathcal{N}(0, 1)$"
+)
+
+kable(descrizione_4, caption = "Proprietà della Chisq", escape = FALSE)
+```
+
+## Assunti del modello di regressione
+
+Come tutti i modelli statistici, anche quello di regressione lineare si basa su una serie di assunti che devono essere rispettati ovvero:
+
+-   **Indipendenza dei predittori dall’errore.** Le X sono misurate senza errore. Tale assunto è evidente nei disegni sperimentali in cui i valori dei predittori sono sotto il diretto controllo dello sperimentatore. Nel resto dei casi i valori delle X sono ottenuti come risultato di un campionamento, pertanto questa assunzione implica che i predittori e gli errori siano indipendenti nella popolazione da cui vengono estratti.
+
+-   **Indipendenza delle osservazioni.** Tutte le coppie di errori $\varepsilon i$ ed $\varepsilon j$ sono tra loro indipendenti per ogni $i = j$. Detto in altri termini significa semplicemente che le osservazioni sono state campionate in modo indipendente l’una dall’altra.
+
+-   **Linearità.** Il valore atteso dell’errore per un dato valore di X2 è zero: $E(\varepsilon i) = E(\varepsilon|xi) = 0$. In pratica significa che il valore atteso della variabile dipendente, $E(Y)$, è una funzione lineare del predittore.
+
+-   **Normalità.** Gli errori sono distribuiti normalmente: $\varepsilon i ∼ N(0,σ2)$. Questo implica che anche la distribuzione di yi sia normale con media pari a $\beta0 + \beta xi$.
+
+-   **Varianza costante.** La varianza degli errori è costante per qualunque valore di X : $V(\varepsilon|xi) = σ2$. Anche in questo caso la varianza costante negli errori implica valori costanti anche della variabile Y per ciascun valore dato di X.
+
+## Interpretazione test parametrici
+
+| **Test** | **Tipo di Dato** | **Assunti** | **Verifica Assunti** | **Interpretazione (p-value)** |
+|---------------|---------------|---------------|---------------|---------------|
+| t-test indipendenti | Continua | Normalità, omogeneità varianze, indipendenza | Shapiro-Wilk, Levene | p \< 0.05: differenza tra gruppi |
+| t-test appaiati | Continua (paired) | Normalità delle differenze | Shapiro-Wilk su differenze | p \< 0.05: differenza tra condizioni |
+| ANOVA a una via | Continua + gruppi | Normalità, omogeneità varianze, indipendenza | Shapiro-Wilk, Levene, Bartlett | p \< 0.05: almeno un gruppo differente |
+| ANOVA a due vie | Continua + 2 fattori | Come sopra + assenza di interazioni spurie | Verifica grafica, Levene, Bartlett | p \< 0.05: effetti principali/interazione significativi |
+| MANOVA | Continua multivariata | Multinormalità, omogeneità covarianze, assenza multicollinearità | Box’s M, grafici, Bartlett | p \< 0.05: almeno una differenza multivariata tra i gruppi |
+| Regressione lineare semplice | Continua | Linearità, normalità residui, omoscedasticità, indipendenza residui | Q-Q plot, Breusch-Pagan, Durbin-Watson, scatter plot | p \< 0.05: predittore significativo |
+| Regressione multipla | Continua | Idem sopra + no multicollinearità | VIF, Condition Index | p \< 0.05: almeno un predittore è significativo |
+| Test F per varianze | Continua | Normalità, indipendenza | Shapiro-Wilk, disegno | p \< 0.05: varianze significativamente diverse |
+| Z-test | Continua, n \> 30 | Conoscenza σ pop, normalità (o n grande) | Controllo teorico | p \< 0.05: differenza tra media campione e popolazione |
+
+## Interpretazione test NON parametrici
+
+| **Test** | **Tipo di Dato** | **Assunti** | **Verifica Assunti** | **Interpretazione (p-value)** |
+|---------------|---------------|---------------|---------------|---------------|
+| Mann-Whitney U | Ordinale o continua non normale | Forma simile distribuzioni, indipendenza | Boxplot, istogrammi | p \< 0.05: distribuzioni significativamente diverse |
+| Wilcoxon signed-rank | Paired non normali | Simmetria differenze, osservazioni appaiate | Boxplot delle differenze | p \< 0.05: differenza significativa tra condizioni |
+| Kruskal-Wallis | Ordinale / continua | Forma simile, indipendenza | Istogrammi, boxplot | p \< 0.05: almeno un gruppo differente |
+| Friedman test | Misure ripetute ordinali | Osservazioni appaiate | Disegno sperimentale | p \< 0.05: almeno una condizione differente |
+| Spearman’s rho | Ordinale o continua | Relazione monotona, indipendenza | Scatterplot, test monotonia | p \< 0.05: correlazione significativa |
+| Kendall’s tau | Ordinale, piccoli campioni | Relazione monotona, indipendenza | Scatterplot, test monotonia | p \< 0.05: correlazione significativa |
+| Chi-quadro (indipendenza) | Categoriale | Frequenze attese ≥ 5, indipendenza | Tabella contingenza, conteggi | p \< 0.05: associazione significativa |
+| Test esatto di Fisher | Categoriale, n piccolo | Frequenze molto basse, 2x2 | Tabella contingenza | p \< 0.05: associazione significativa |
+| McNemar | Categoriale paired | Osservazioni appaiate | Tabella 2x2, differenze discordanti | p \< 0.05: cambiamento significativo pre/post |
+
+## Interpretazione test per assunti
+
+| **Test** | **Assunto** | **Uso** | **Interpretazione (p-value)** |
+|------------------|------------------|------------------|------------------|
+| Shapiro-Wilk / Kolmogorov | Normalità | Normalità delle variabili o residui | p \< 0.05: dati NON normali |
+| Levene / Bartlett | Omogeneità varianze | Test ANOVA, t-test indipendenti | p \< 0.05: varianze NON omogenee |
+| Mauchly | Sfericità | Misure ripetute | p \< 0.05: sfericità VIOLATA |
+| Breusch-Pagan / White | Omoscedasticità residui | Regressione | p \< 0.05: eteroscedasticità presente |
+| Durbin-Watson | Indipendenza residui | Serie temporali / regressione | ≠ 2: autocorrelazione presente |
+| VIF / Tolerance | Multicollinearità | Regressione multipla | VIF \> 10: multicollinearità problematicamente alta |
+
+## Schema decisionale: tipo di effetti casuali vs grafico atteso
+
+🔹 Formula del modello: `y ~ x + ( ? | gruppo )`
+
+| Specifica nella formula | Intercette variabili? | Pendenze variabili? | Tipo di grafico |
+|------------------|------------------|------------------|------------------|
+| `(1 | gruppo)` | ✅ Sì | ❌ No | **Intercette variabili** |
+| `(0 + x | gruppo)` | ❌ No | ✅ Sì | **Solo pendenze variabili (senza shift)** |
+| `(1 + x | gruppo)` | ✅ Sì | ✅ Sì | **Intercette e pendenze variabili** |
+| `(1 | gruppo) + (0 + x | gruppo)` | ✅ Sì | ✅ Sì | **Intercette e pendenze variabili (specificati separatamente)** |
+| `(x | gruppo)` | ✅ Sì | ✅ Sì | ✔️ Sintassi abbreviata per `(1 + x | gruppo)` |
+
+**Nota bene**
+
+-   Se **pendenze variabili** sono presenti → le linee nei grafici hanno **inclinazioni diverse** per ciascun gruppo.
+-   Se **solo intercette variano** → tutte le linee hanno **stessa inclinazione**, ma partono da **livelli diversi**.
+
+```{r}
+library(lme4)
+library(ggplot2)
+library(dplyr)
+
+data("sleepstudy")
+
+mod_intercept <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+
+# Visualizzazione
+sleepstudy %>%
+  mutate(pred = predict(mod_intercept)) %>%
+  ggplot(aes(x = Days, y = Reaction)) +
+  geom_point() +
+  geom_line(aes(y = pred, group = Subject), color = "blue") +
+  labs(title = "Intercette variabili, pendenza fissa (1 | Subject)")
+```
+
+```{r}
+
+
+mod_slope <- lmer(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
+
+sleepstudy %>%
+  mutate(pred = predict(mod_slope)) %>%
+  ggplot(aes(x = Days, y = Reaction)) +
+  geom_point() +
+  geom_line(aes(y = pred, group = Subject), color = "orange") +
+  labs(title = "Pendenze variabili, intercetta fissa (0 + Days | Subject)")
+```
+
+```{r}
+
+mod_both <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+
+sleepstudy %>%
+  mutate(pred = predict(mod_both)) %>%
+  ggplot(aes(x = Days, y = Reaction)) +
+  geom_point() +
+  geom_line(aes(y = pred, group = Subject), color = "forestgreen") +
+  labs(title = "Intercette e pendenze variabili (1 + Days | Subject)")
+
+```
+
+## Lettura output
+
+### Matrice PSI (Ψ) - effetti casuali
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+#| echo: false
+#| message: false
+library(MASS)
+library(lme4)
+# Parametri
+n_gruppi <- 30
+n_per_gruppo <- 10
+n <- n_gruppi * n_per_gruppo
+ 
+# Variabili predittive
+ gruppo <- factor(rep(1:n_gruppi, each = n_per_gruppo))
+ x1 <- rnorm(n)
+ x2 <- rnorm(n)
+ 
+ # Effetti casuali: (intercetta, x1, x2)
+ Sigma <- matrix(c(
+     1.0,  0.3,  0.4,
+     0.3,  0.8,  0.2,
+     0.4,  0.2,  1.2
+), nrow = 3)
+ 
+  random_effects <- mvrnorm(n_gruppi, mu = c(0, 0, 0), Sigma = Sigma)
+  colnames(random_effects) <- c("b0", "b1", "b2")
+ # Assegna effetti casuali alle osservazioni
+ b0 <- random_effects[gruppo, 1]
+ b1 <- random_effects[gruppo, 2]
+ b2 <- random_effects[gruppo, 3]
+ 
+ # Costruisci la variabile dipendente
+ epsilon <- rnorm(n, sd = 1)
+ y <- b0 + b1 * x1 + b2 * x2 + epsilon
+ 
+ # Crea dataframe
+ dati <- data.frame(y, x1, x2, gruppo)
+random_effects <- mvrnorm(n_gruppi, mu = c(0, 0, 0), Sigma = Sigma)
+colnames(random_effects) <- c("b0", "b1", "b2")
+mod <- lmer(y ~ x1 + x2 + (1 + x1 + x2 | gruppo), data = dati)
+psi <- as.matrix(VarCorr(mod)$gruppo)
+print(psi[,])
+
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+-   🔍 Interpreta la matrice
+
+**Diagonale** (verso sinistra) - varianze (quanto variano gli effetti casuali per intercetta, x1, x2)
+
+**Fuori diagonale** - covarianze (come variano insieme gli effetti nei gruppi)
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Regressione lineare
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+# Simulazione dati
+set.seed(123)
+height <- rnorm(100, mean = 170, sd = 10)
+weight <- 0.987 * height - 25.345 + rnorm(100, mean = 0, sd = 4.5)
+dati <- data.frame(height, weight)
+
+# Modello di regressione
+model <- lm(weight ~ height, data = dati)
+
+# Output del modello
+summary(model)
+
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   **Call**: Specifica la formula usata: `weight ~ height`.
+-   **Residui**: Differenze tra i valori osservati e quelli stimati. Distribuiti idealmente attorno a 0.
+-   **Coefficienti**:
+    -   *Intercept*: valore teorico del peso quando l’altezza è zero (non realistico, ma serve al modello).
+    -   *Height*: effetto medio dell’altezza sul peso (es. +0.987 kg per ogni cm in più).
+-   **Errore standard residuo**: misura la dispersione dei residui. Più basso = stime più precise.
+-   **R² / Adjusted R²**: percentuale di variabilità spiegata dal modello (con e senza correzione).
+-   **F-statistic**: test globale di significatività del modello. Se p-value è basso → modello significativo.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Regressione lineare - effetti fissi/random
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+library(lme4)
+data(mtcars)
+
+# Trasformo cyl in fattore per usarlo come gruppo
+mtcars$cyl <- factor(mtcars$cyl)
+
+# Modello con effetto casuale sull'intercetta e pendenza di hp per cyl
+mod <- lmer(mpg ~ hp + (1 + hp | cyl), data = mtcars)
+summary(mod)
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+### 🔹 Effetti fissi (Fixed effects)
+
+-   **(Intercept)**: `30.74`\
+    Questo valore rappresenta la stima del consumo medio di carburante (*mpg*) quando i cavalli (*hp*) sono pari a 0. Naturalmente, non è realistico avere 0 cavalli, ma questo valore serve come punto di riferimento nel modello.
+
+-   **hp**: `-0.068`\
+    In media, all’aumentare di 1 unità nei cavalli (*hp*), ci si aspetta una **diminuzione di 0.068 miglia per gallone** nel consumo (*mpg*), tenendo conto delle variazioni tra gruppi (`cyl`).
+
+------------------------------------------------------------------------
+
+### 🔹 Effetti casuali (Random effects)
+
+-   Il termine `(1 + hp | cyl)` specifica che sia l’intercetta che il coefficiente di *hp* variano tra i gruppi definiti da **numero di cilindri (`cyl`)**.
+
+-   **Varianza dell'intercetta**:\
+    Indica che esiste **una forte variabilità nel livello medio di *mpg* tra i gruppi di cilindrata**.
+
+-   **Varianza della pendenza di `hp`**:\
+    Significa che l'effetto di *hp* su *mpg* **cambia leggermente tra i gruppi**, ma la variabilità è più contenuta rispetto all'intercetta.
+
+-   **Correlazione intercetta-pendenza**:\
+    Gruppi con valori medi più alti di *mpg* tendono anche ad avere pendenze più "piatte" (meno negative), suggerendo una relazione positiva tra intercetta e pendenza.
+
+------------------------------------------------------------------------
+
+### 🔹 Errore residuo (Residual variance)
+
+-   **Varianza residua**:\
+    Rappresenta la variabilità nei valori di *mpg* **non spiegata né dagli effetti fissi né da quelli casuali**. Questo è l’errore “interno” al gruppo.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Analisi della varianza
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+# Simulazione dati: 3 gruppi con medie diverse
+set.seed(42)
+group <- factor(rep(c("A", "B", "C"), each = 30))
+values <- c(rnorm(30, mean = 50, sd = 5),
+            rnorm(30, mean = 55, sd = 5),
+            rnorm(30, mean = 60, sd = 5))
+dati <- data.frame(group, values)
+
+# Analisi della varianza
+model_anova <- aov(values ~ group, data = dati)
+summary(model_anova)
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   **Obiettivo**: verificare se almeno un gruppo ha una media significativamente diversa.
+-   **Formula**: `values ~ group` confronta le medie dei gruppi A, B e C.
+-   **Gradi di libertà (DF)**:
+    -   *Tra gruppi*: `k - 1` → 3 − 1 = 2
+    -   *Entro gruppi (residuali)*: `n - k` → 90 − 3 = 87
+-   **Somma dei quadrati (Sum Sq)**:
+    -   *Between Groups*: variabilità spiegata dalle differenze tra le medie
+    -   *Residuals*: variabilità interna ai gruppi
+-   **Media dei quadrati (Mean Sq)**: Sum Sq / DF
+-   **F-value**: rapporto tra varianza spiegata e residua
+-   **Pr(\>F)**:
+    -   Se \< 0.05 → almeno un gruppo ha media significativamente diversa
+    -   Se \> 0.05 → nessuna differenza significativa
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Confronto tra modelli (AIC)
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+# Carica il pacchetto MuMIn
+library(MuMIn)
+
+# Imposta l'azione per i valori mancanti (necessario per dredge)
+options(na.action = "na.fail")
+
+# Modello globale
+data(mtcars)
+mod_full <- lm(mpg ~ wt + hp + qsec + drat, data = mtcars)
+
+# Genera la tabella dei modelli
+mod_dredge <- dredge(mod_full, rank = "AIC")
+
+# Visualizza la tabella
+mod_dredge
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   **Obiettivo**: confrontare tutti i sottoinsiemi possibili del modello globale per identificare il modello più parsimonioso secondo il criterio AIC.
+-   **Colonne principali**:
+    -   `Int`, `wt`, `hp`, `qsec`, `drat`: indicano la presenza (`+`) o assenza di ciascun termine nel modello.
+    -   `df`: numero di parametri stimati nel modello.
+    -   `logLik`: log-likelihood del modello.
+    -   `AIC`: criterio di informazione di Akaike; valori più bassi indicano modelli migliori.
+    -   `delta`: differenza tra l'AIC del modello corrente e il minimo AIC tra tutti i modelli.
+    -   `weight`: peso di Akaike, rappresenta la probabilità relativa che il modello sia il migliore tra quelli considerati.
+-   **Interpretazione dei risultati**:
+    -   Il modello con `delta = 0` è il migliore secondo l'AIC.
+    -   Modelli con `delta < 2` hanno un supporto sostanziale e possono essere considerati competitivi.
+    -   I pesi di Akaike (`weight`) possono essere utilizzati per il model averaging o per valutare l'evidenza relativa a favore di ciascun modello.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Confronto tra modelli (LOO)
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+
+
+# Caricamento pacchetti
+library(rstanarm)
+library(loo)
+library(dplyr)
+
+# Simulazione dei dati
+set.seed(123)
+n <- 100
+x1 <- rnorm(n)
+x2 <- rnorm(n)
+x3 <- rnorm(n)
+y <- 1 + 2 * x1 + 0.5 * x2 + rnorm(n, sd = 1.5)
+
+# Creazione del data frame
+df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3)
+
+# Fit di 3 modelli con stan_glm
+mod1 <- stan_glm(y ~ x1, data = df, refresh = 0)
+mod2 <- stan_glm(y ~ x1 + x2, data = df, refresh = 0)
+mod3 <- stan_glm(y ~ x1 + x2 + x3, data = df, refresh = 0)
+
+# Calcolo degli oggetti LOO
+loo1 <- loo(mod1)
+loo2 <- loo(mod2)
+loo3 <- loo(mod3)
+
+# Comparazione modelli
+comp <- loo_compare(loo1, loo2, loo3)
+
+# Estrazione manuale delle metriche
+model_names <- c("mod1: x1", "mod2: x1+x2", "mod3: x1+x2+x3")
+loo_list <- list(loo1, loo2, loo3)
+
+df_loo <- data.frame(
+  model = model_names,
+  looic = sapply(loo_list, function(x) x$estimates["looic", "Estimate"]),
+  se_looic = sapply(loo_list, function(x) x$estimates["looic", "SE"]),
+  elpd_diff = comp[, "elpd_diff"],
+  se_diff = comp[, "se_diff"]
+)
+
+# Visualizzazione tabella finale
+print(df_loo)
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+**Significato degli indici riportati:**
+
+-   `looic` (**Leave-One-Out Information Criterion**): misura la bontà predittiva del modello. Valori **più bassi** indicano **migliore performance predittiva**.
+-   `se_looic`: è l’**errore standard** associato a `looic`. Indica l’incertezza nella stima di `looic`.
+-   `elpd_diff` (**expected log predictive density difference**): differenza della capacità predittiva di ciascun modello rispetto al **migliore** (quello con `elpd_diff = 0`). Valori **negativi** indicano prestazioni inferiori.
+-   `se_diff`: errore standard associato a `elpd_diff`. Serve per valutare la **significatività** della differenza: se `elpd_diff` è maggiore di **2×se_diff**, la differenza è considerata sostanziale.
+
+------------------------------------------------------------------------
+
+**Risultati nel confronto tra modelli:**
+
+-   Il modello **mod2: x1 + x2** ha il valore di **looic più basso**, quindi è il **miglior modello predittivo** tra quelli considerati.
+-   Il modello **mod1: x1** ha `elpd_diff = -12.2` e `se_diff = 4.3`, quindi è **significativamente peggiore** di mod2 (la differenza supera 2 volte l'errore standard).
+-   Il modello **mod3: x1 + x2 + x3** ha `elpd_diff = -0.8` e `se_diff = 0.9`, una differenza **non significativa** rispetto a mod2. Aggiungere la variabile `x3` **non migliora** in modo rilevante la predizione.
+
+In sintesi, **mod2 è il miglior compromesso tra semplicità e accuratezza predittiva**.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Chisq Test per modelli annidati
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+# Pacchetti
+library(lme4)
+
+# Dataset fittizio (Puoi usare sleepstudy per esempio)
+data("sleepstudy")
+
+# Modelli misti annidati
+m1 <- lmer(Reaction ~ 1 + (1 | Subject), data = sleepstudy, REML = FALSE)
+m2 <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy, REML = FALSE)
+m3 <- lmer(Reaction ~ Days + I(Days^2) + (1 | Subject), data = sleepstudy, REML = FALSE)
+m4 <- lmer(Reaction ~ Days + I(Days^2) + I(Days^3) + (1 | Subject), data = sleepstudy, REML = FALSE)
+m5 <- lmer(Reaction ~ Days + I(Days^2) + I(Days^3) + I(Days^4) + (1 | Subject), data = sleepstudy, REML = FALSE)
+
+# Confronto dei modelli (Likelihood Ratio Test)
+anova(m1, m2, m3, m4, m5)
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   Sono stati confrontati 5 modelli misti annidati:
+    -   Tutti includono un termine casuale per il soggetto (`(1 | Subject)`).
+    -   Ogni modello aggiunge progressivamente effetti fissi: `Days`, `Days^2`, ecc.
+-   La tabella mostra:
+    -   **AIC, BIC**: criteri di bontà del modello; valori più bassi sono migliori.
+    -   **logLik**: log-verosimiglianza del modello.
+    -   **Chisq**: statistica del test del rapporto di verosimiglianza (LRT).
+    -   **Df diff**: differenza nei gradi di libertà tra i modelli.
+    -   **Pr(\>Chisq)**: p-value del test LRT.
+-   Se il p-value \< 0.05 → l’aggiunta della nuova variabile migliora significativamente il modello.
+-   È importante usare `REML = FALSE` per confronti validi tra modelli con effetti fissi diversi.
+-   L’ultimo modello con miglioramento significativo e AIC basso può essere selezionato come finale.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Studio di potenza
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+library( ADati )
+Ym <- c( 8.8, 19.3, 15.7, 14.6, 8.2, 7.6, 8.7, 8.4 ) # punteggi maschi 
+Yf <- c( 4.8, 10.6, 11.7, 10.1, 4.8, 8.2, 8.5, 6.8 ) # punteggi femmine 
+Cohen.d( Ym, Yf, type = "two.sample" )
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   **Statistic:** `d = 0.8856`
+
+-   **Interpretazione:** **Effetto grande** secondo le soglie di Cohen:
+
+    -   piccolo: `~ 0.2`
+    -   medio: `~ 0.5`
+    -   grande: `~ 0.8`
+
+Questo significa che la **differenza media tra i gruppi `Ym` e `Yf`** è ampia rispetto alla variabilità complessiva.\
+L'effetto è **sufficientemente forte da essere considerato rilevante**
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Errori di tipo M o S
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+# Carica pacchetto
+library(PRDA)
+
+# Calcolo retrospettivo: effect size atteso = 0.4, 8 soggetti per gruppo
+retrospective(0.4, 8, 8,
+              test_method = "two_sample",
+              alternative = "greater")
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   **Potenza**: `0.182`\
+    Il test ha solo **il 18.2% di probabilità** di rilevare un effetto vero di `d = 0.4` se esiste.\
+    Questo valore è **molto inferiore al livello desiderato di 0.80**, indicando un **alto rischio di falso negativo (errore di tipo II)**.
+
+-   **Errore di tipo M (Magnitude)**: `2.887`\
+    Se ottieni un risultato significativo, è probabile che l'effetto stimato sarà **quasi 3 volte più grande** di quello reale.\
+    Questo riflette un **rischio molto elevato di sovrastimare l’effetto** in caso di significatività.
+
+-   **Errore di tipo S (Sign)**: `0`\
+    Il rischio che l’effetto significativo abbia **segno opposto** rispetto a quello reale è nullo.\
+    Questo è possibile perché il test è **unilaterale** ("greater"), quindi non considera effetti nel verso opposto.
+
+-   **Valore critico di d**: `0.881`\
+    Perché il risultato sia significativo a `p < 0.05`, l'effetto osservato dovrà essere **≥ 0.881**.\
+    Questo è **più del doppio dell'effetto ipotizzato**, il che rende difficile ottenere significatività con questo disegno.
+
+📌 **Conclusione**:\
+Il disegno attuale (n = 8 per gruppo) è **sottodimensionato** per rilevare un effetto di `d = 0.4` con adeguata potenza.\
+Sono raccomandati **campioni più grandi** per ridurre il rischio di errore tipo M e aumentare la potenza.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Bayes Factor Analysis
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+library(BayesFactor)
+
+# Dataset d'esempio
+data("mtcars")
+
+# Bayes Factor per due modelli
+BF1 <- lmBF(mpg ~ wt, data = mtcars)
+BF2 <- lmBF(mpg ~ wt + hp, data = mtcars)
+
+# Confronto tra i due modelli
+BF_comparison <- BF2 / BF1
+BF_comparison
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   Sono stati confrontati due modelli:
+    -   **BF1**: mpg \~ wt
+    -   **BF2**: mpg \~ wt + hp
+-   Il **Bayes Factor (BF)** confronta direttamente la probabilità dei dati sotto i due modelli.
+-   Valore calcolato: `BF2 / BF1`
+    -   Se **BF \> 1** → i dati supportano di più il secondo modello.
+    -   Se **BF \< 1** → i dati supportano di più il primo modello.
+-   **Interpretazione standard del BF**:
+    -   1–3: evidenza debole
+    -   3–10: evidenza moderata
+    -   (\>10): evidenza forte a favore del modello al numeratore
+-   Il BF è una misura continua della forza di evidenza, a differenza del p-value che si basa su soglie arbitrarie.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Log Relative Evidence tra modelli (Bayes Factor)
+
+```{=html}
+<style>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.flex-item {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+
+<div class="flex-container">
+  <div class="flex-item card">
+```
+
+```{r}
+# Carica i pacchetti necessari
+library(BayesFactor)
+library(ggplot2)
+library(reshape2)
+
+# Dataset di esempio
+data(mtcars)
+
+# Definisci i modelli da confrontare
+models <- list(
+  "mpg ~ wt",
+  "mpg ~ wt + hp",
+  "mpg ~ wt + hp + qsec",
+  "mpg ~ wt + hp + qsec + drat"
+)
+
+# Calcola i Bayes Factors per ciascun modello rispetto al modello nullo
+bf_list <- lapply(models, function(formula) {
+  lmBF(as.formula(formula), data = mtcars)
+})
+
+# Estrai i nomi dei modelli
+model_names <- sapply(models, function(f) f)
+
+# Calcola la matrice dei log-Bayes Factors relativi
+log_bf_matrix <- matrix(0, nrow = length(models), ncol = length(models))
+colnames(log_bf_matrix) <- model_names
+rownames(log_bf_matrix) <- model_names
+
+for (i in 1:length(models)) {
+  for (j in 1:length(models)) {
+    bf_ratio <- bf_list[[i]] / bf_list[[j]]
+    log_bf_matrix[i, j] <- log(as.numeric(bf_ratio@bayesFactor$bf))
+  }
+}
+
+# Limita i valori tra -3 e 3 per la visualizzazione
+log_bf_matrix[log_bf_matrix > 3] <- 3
+log_bf_matrix[log_bf_matrix < -3] <- -3
+
+# Converti la matrice in formato long per ggplot2
+log_bf_df <- melt(log_bf_matrix, varnames = c("Model1", "Model2"), value.name = "LogBF")
+
+# Crea la heatmap
+ggplot(log_bf_df, aes(x = Model2, y = Model1, fill = LogBF)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0,
+                       limits = c(-3, 3), name = "log(BF)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Heatmap della Log-Relative Evidence tra modelli",
+       x = "Modello di riferimento",
+       y = "Modello confrontato")
+```
+
+::: {.callout-note collapse="true" title="Mostra interpretazione dettagliata"}
+## 🧾 Interpretazione dell'Output
+
+-   Ogni cella della heatmap rappresenta il **logaritmo del Bayes Factor** tra due modelli specifici.
+-   Il colore indica la forza dell'evidenza:
+    -   **Rosso**: evidenza a favore del modello sulla riga rispetto a quello sulla colonna.
+    -   **Blu**: evidenza a favore del modello sulla colonna rispetto a quello sulla riga.
+    -   **Bianco**: evidenza neutra o trascurabile.
+-   La scala dei colori è limitata tra -3 e 3 per facilitare l'interpretazione visiva.
+-   Questo tipo di visualizzazione consente un confronto diretto e intuitivo tra tutti i modelli considerati.
+:::
+
+```{=html}
+ </div>
+</div>
+```
+
+### Interpretazione SEM - path Diagram
+
+```{r}
+library(lavaan)
+library(semPlot)
+
+# Simula dati
+set.seed(123)
+n <- 300
+Parenting <- rnorm(n)
+Temperamento <- 0.5 * Parenting + rnorm(n)
+Ruminazione <- 0.6 * Temperamento + 0.3 * Parenting + rnorm(n)
+
+x1 <- 0.8 * Parenting + rnorm(n)
+x2 <- 0.7 * Parenting + rnorm(n)
+x3 <- 0.9 * Parenting + rnorm(n)
+
+x4 <- 0.9 * Temperamento + rnorm(n)
+x5 <- 0.6 * Temperamento + rnorm(n)
+x6 <- 0.8 * Temperamento + rnorm(n)
+
+x7 <- 0.7 * Ruminazione + rnorm(n)
+x8 <- 0.9 * Ruminazione + rnorm(n)
+x9 <- 0.6 * Ruminazione + rnorm(n)
+
+sim_data <- data.frame(x1, x2, x3, x4, x5, x6, x7, x8, x9)
+
+# Modello SEM
+model <- '
+  Parenting =~ x1 + x2 + x3
+  Temperamento =~ x4 + x5 + x6
+  Ruminazione =~ x7 + x8 + x9
+
+  Temperamento ~ Parenting
+  Ruminazione ~ Temperamento + Parenting
+'
+
+fit <- sem(model, data = sim_data)
+
+# Crea layout manuale (3x4 griglia per 12 nodi)
+# Ordina manualmente: latenti + osservate
+
+layout_matrix <- matrix(c(
+  1, 2, 3, 4,
+  5, 6, 7, 8,
+  9, 10, 11, 12
+), byrow = TRUE, ncol = 4)
+
+# Converti in coordinate x-y
+layout_xy <- as.matrix(expand.grid(x = 1:4, y = 3:1))
+
+# semPaths con layout personalizzato
+semPaths(
+  fit,
+  what = "std",
+  whatLabels = "no",
+  layout = layout_xy,
+  sizeMan = 6,
+  sizeLat = 8,
+  edge.label.cex = 1.2,
+  residuals = TRUE,
+  intercepts = FALSE,
+  nCharNodes = 0,
+  edge.color = "black",
+  mar = c(4, 4, 4, 4)
+)
+
+```
+
+::: {.callout-note title="Interpretazione e schema decisionale per il conteggio dei parametri in un modello SEM"}
+Il diagramma SEM visualizzato rappresenta una struttura di relazioni tra **variabili latenti**, **variabili osservate**, e le **associazioni** tra di esse. È possibile utilizzare il diagramma per stimare il **numero totale di parametri** del modello sulla base della **tipologia e direzione delle frecce**, nonché della **presenza di varianze e covarianze**.
+
+### 📌 Categorie principali di parametri da contare
+
+1.  **Carichi fattoriali (Loadings)**
+    -   Frecce **direzionali** da fattori latenti → variabili osservate\
+    -   Numero: 1 parametro per ciascuna freccia
+2.  **Regressioni strutturali (Path coefficients)**
+    -   Frecce **direzionali** tra variabili latenti o da manifesti a latenti\
+    -   Numero: 1 parametro per ciascuna freccia
+3.  **Varianze**
+    -   Rappresentate da **semicerchi** che si collegano a una singola variabile\
+    -   Ogni variabile latente e ogni variabile manifestata ha una **varianza stimata**
+    -   Numero: 1 parametro per variabile
+4.  **Covarianze**
+    -   Rappresentate da **frecce curve** tra due variabili senza direzione causale (↔)\
+    -   Spesso tra variabili latenti o tra errori di misura\
+    -   Numero: 1 parametro per ciascuna coppia correlata
+
+## Tipologie di variabili
+
+| Tipo di variabile | Caratteristiche | Esempi |
+|------------------------|------------------------|------------------------|
+| **Esogena** | Non è spiegata da altre variabili nel modello | Età, Sesso, Condizione sperimentale |
+| **Endogena** | È spiegata da almeno una variabile nel modello | Depressione, Stress, Prestazione |
+
+------------------------------------------------------------------------
+
+## Dal grafo SEM: come riconoscerle?
+
+-   **Freccia in entrata** (→) = variabile **endogena**
+-   **Solo frecce in uscita** = variabile **esogena**
+-   Le **variabili latenti** possono essere endogene o esogene a seconda del modello
+:::
