@@ -193,7 +193,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 ## Interpretazione test parametrici
 
 | **Test** | **Tipo di Dato** | **Assunti** | **Verifica Assunti** | **Interpretazione (p-value)** |
-|----|----|----|----|----|
+|---------------|---------------|---------------|---------------|---------------|
 | t-test indipendenti | Continua | Normalità, omogeneità varianze, indipendenza | Shapiro-Wilk, Levene | p \< 0.05: differenza tra gruppi |
 | t-test appaiati | Continua (paired) | Normalità delle differenze | Shapiro-Wilk su differenze | p \< 0.05: differenza tra condizioni |
 | ANOVA a una via | Continua + gruppi | Normalità, omogeneità varianze, indipendenza | Shapiro-Wilk, Levene, Bartlett | p \< 0.05: almeno un gruppo differente |
@@ -207,7 +207,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 ## Interpretazione test NON parametrici
 
 | **Test** | **Tipo di Dato** | **Assunti** | **Verifica Assunti** | **Interpretazione (p-value)** |
-|----|----|----|----|----|
+|---------------|---------------|---------------|---------------|---------------|
 | Mann-Whitney U | Ordinale o continua non normale | Forma simile distribuzioni, indipendenza | Boxplot, istogrammi | p \< 0.05: distribuzioni significativamente diverse |
 | Wilcoxon signed-rank | Paired non normali | Simmetria differenze, osservazioni appaiate | Boxplot delle differenze | p \< 0.05: differenza significativa tra condizioni |
 | Kruskal-Wallis | Ordinale / continua | Forma simile, indipendenza | Istogrammi, boxplot | p \< 0.05: almeno un gruppo differente |
@@ -221,7 +221,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 ## Interpretazione test per assunti
 
 | **Test** | **Assunto** | **Uso** | **Interpretazione (p-value)** |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Shapiro-Wilk / Kolmogorov | Normalità | Normalità delle variabili o residui | p \< 0.05: dati NON normali |
 | Levene / Bartlett | Omogeneità varianze | Test ANOVA, t-test indipendenti | p \< 0.05: varianze NON omogenee |
 | Mauchly | Sfericità | Misure ripetute | p \< 0.05: sfericità VIOLATA |
@@ -234,7 +234,7 @@ Come tutti i modelli statistici, anche quello di regressione lineare si basa su 
 🔹 Formula del modello: `y ~ x + ( ? | gruppo )`
 
 | Specifica nella formula | Intercette variabili? | Pendenze variabili? | Tipo di grafico |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | `(1 | gruppo)` | ✅ Sì | ❌ No | **Intercette variabili** |
 | `(0 + x | gruppo)` | ❌ No | ✅ Sì | **Solo pendenze variabili (senza shift)** |
 | `(1 + x | gruppo)` | ✅ Sì | ✅ Sì | **Intercette e pendenze variabili** |
@@ -485,10 +485,10 @@ summary(mod)
 
 ### 🔹 Effetti fissi (Fixed effects)
 
--   **(Intercept)**: `30.74`\
+-   **(Intercept)**: \
     Questo valore rappresenta la stima del consumo medio di carburante (*mpg*) quando i cavalli (*hp*) sono pari a 0. Naturalmente, non è realistico avere 0 cavalli, ma questo valore serve come punto di riferimento nel modello.
 
--   **hp**: `-0.068`\
+-   **hp**: \
     In media, all’aumentare di 1 unità nei cavalli (*hp*), ci si aspetta una **diminuzione di 0.068 miglia per gallone** nel consumo (*mpg*), tenendo conto delle variazioni tra gruppi (`cyl`).
 
 ------------------------------------------------------------------------
@@ -746,8 +746,8 @@ print(df_loo)
 **Risultati nel confronto tra modelli:**
 
 -   Il modello **mod2: x1 + x2** ha il valore di **looic più basso**, quindi è il **miglior modello predittivo** tra quelli considerati.
--   Il modello **mod1: x1** ha `elpd_diff = -12.2` e `se_diff = 4.3`, quindi è **significativamente peggiore** di mod2 (la differenza supera 2 volte l'errore standard).
--   Il modello **mod3: x1 + x2 + x3** ha `elpd_diff = -0.8` e `se_diff = 0.9`, una differenza **non significativa** rispetto a mod2. Aggiungere la variabile `x3` **non migliora** in modo rilevante la predizione.
+-   Il modello **mod1: x1** è **significativamente peggiore** di mod2 
+-   Il modello **mod3: x1 + x2 + x3**, una differenza **non significativa** rispetto a mod2. Aggiungere la variabile `x3` **non migliora** in modo rilevante la predizione.
 
 In sintesi, **mod2 è il miglior compromesso tra semplicità e accuratezza predittiva**.
 :::
@@ -1210,7 +1210,7 @@ Il diagramma SEM visualizzato rappresenta una struttura di relazioni tra **varia
 ## Tipologie di variabili
 
 | Tipo di variabile | Caratteristiche | Esempi |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Esogena** | Non è spiegata da altre variabili nel modello | Età, Sesso, Condizione sperimentale |
 | **Endogena** | È spiegata da almeno una variabile nel modello | Depressione, Stress, Prestazione |
 
@@ -1222,3 +1222,22 @@ Il diagramma SEM visualizzato rappresenta una struttura di relazioni tra **varia
 -   **Solo frecce in uscita** = variabile **esogena**
 -   Le **variabili latenti** possono essere endogene o esogene a seconda del modello
 :::
+
+```{=html}
+<!-- Footer -->
+<footer class="bg-light text-center text-muted py-4 mt-5 border-top">
+  <div class="container">
+    <p class="mb-1">
+  © 2025 Antonio Di Mauro – Contenuti disponibili sotto licenza 
+  <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
+</p>
+    <p class="mb-0">
+      <a href="https://paypal.me/antood99?" class="text-muted">Supporta il progetto</a> •
+      <a href="https://github.com/antood99" class="text-muted" target="_blank">GitHub</a>
+    </p>
+  </div>
+</footer>
+
+
+```
+
