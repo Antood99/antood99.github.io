@@ -93,7 +93,7 @@ hist(mtcars$mpg,
 ### 📌 Riepilogo – Schema utile
 
 | Aspetto | Cosa guardare | Cosa indica |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Asse X** | Intervalli della variabile | Cosa stai misurando |
 | **Asse Y** | Altezza delle barre | Frequenza delle osservazioni |
 | **Barra più alta** | Valore/modo più frequente | Tendenza centrale |
@@ -169,7 +169,7 @@ boxplot(mpg ~ as.factor(cyl), data = mtcars,
 ### 📌 Riepilogo – Schema utile
 
 | Elemento | Cosa rappresenta | Cosa ci dice |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Linea centrale** | Mediana | Tendenza centrale |
 | **Box (Q1 - Q3)** | Intervallo interquartile (IQR) | Variabilità centrale |
 | **Whiskers** | Dati non-outlier | Dispersione esterna |
@@ -245,7 +245,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
 ### 📌 Riepilogo – Schema utile
 
 | Elemento | Cosa rappresenta | Cosa ci dice |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Larghezza del violino** | Densità di dati in ogni intervallo | Frequenza relativa |
 | **Forma complessiva** | Distribuzione | Simmetria, multimodalità |
 | **Box centrale (se presente)** | Mediana + IQR | Tendenza centrale e variabilità |
@@ -322,7 +322,7 @@ qqline(mtcars$mpg, col = "red")
 ### 📌 Riepilogo – Schema utile
 
 | Aspetto | Cosa osservare | Cosa indica |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Allineamento dei punti** | Segue la linea diagonale | I dati seguono la distribuzione teorica |
 | **Deviazione alle estremità** | Code più o meno pesanti | Differenze nella coda |
 | **Curvatura dei punti** | Forma a S o a gomito | Asimmetria (skewness) |
@@ -411,7 +411,7 @@ plot(mtcars$hp, mtcars$mpg,
 ### 📌 Riepilogo – Schema utile
 
 | Aspetto | Cosa osservare | Cosa indica |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Distribuzione dei punti** | Densità, forma, direzione | Tipo di relazione (positiva, negativa, nulla) |
 | **Linearità** | Allineamento lungo una retta | Relazione lineare |
 | **Dispersione** | Vicinanza dei punti | Forza della correlazione |
@@ -482,7 +482,7 @@ abline(h = 0, col = "red", lty = 2)
 #### ✅ 3. **Cosa cercare**
 
 | Pattern | Interpretazione |
-|----|----|
+|------------------------------------|------------------------------------|
 | **Punti distribuiti a caso** | ✅ Il modello è adeguato (errori casuali, omoscedastici). |
 | **Forma a U o curva** | ❌ Mancanza di linearità → forse serve un modello non lineare. |
 | **Funnel (apertura/chiusura)** | ❌ Eteroschedasticità → la varianza degli errori cambia. |
@@ -500,7 +500,7 @@ abline(h = 0, col = "red", lty = 2)
 ### 📌 Riepilogo – Schema utile
 
 | Aspetto | Cosa osservare | Cosa indica |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Dispersione casuale** | Punti sparsi intorno a y = 0 | Buon modello lineare |
 | **Pattern curvo o forma a U** | Trend sistematici nei residui | Relazione non lineare |
 | **Funnel (cono aperto/chiuso)** | Varianza non costante | Eteroschedasticità |
@@ -566,7 +566,7 @@ boxplot(residuals(model) ~ mtcars$cyl,
 #### ✅ 3. **Cosa osservare nei boxplot**
 
 | Osservazione | Interpretazione |
-|----|----|
+|------------------------------------|------------------------------------|
 | ✅ **Box simili in tutti i gruppi** | Residui distribuiti in modo coerente → modello stabile |
 | ✅ **Mediane vicine a 0** | Il modello **non sovrastima né sottostima** i gruppi |
 | ❌ **Box molto diversi tra gruppi** | **Eteroschedasticità** → varianza non costante |
@@ -586,7 +586,7 @@ boxplot(residuals(model) ~ mtcars$cyl,
 ### 📌 Riepilogo – Schema utile
 
 | Aspetto | Cosa osservare | Cosa indica |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Varianza dei box** | Simile tra gruppi | Omogeneità delle varianze (buono) |
 | **Mediana** | Vicina a 0 in ogni gruppo | Nessun bias sistematico |
 | **Outlier** | Concentrati in pochi gruppi | Possibili anomalie |
@@ -726,7 +726,7 @@ abline(a = 0, b = 1, col = "red", lty = 2)
 #### ✅ 3. **Segnali da osservare**
 
 | Comportamento dei punti | Cosa indica |
-|----|----|
+|------------------------------------|------------------------------------|
 | ✅ Allineamento lungo la diagonale | Previsioni vicine ai valori reali (ottimo) |
 | ❌ Deviazione sistematica | Bias del modello (sottostima o sovrastima) |
 | ❌ Dispersione elevata | Previsioni poco precise |
@@ -832,7 +832,7 @@ ggplot(df_power, aes(x = d, y = power)) +
 #### ✅ 3. **Cosa osservare nella curva**
 
 | Forma della curva | Interpretazione |
-|----|----|
+|------------------------------------|------------------------------------|
 | 📈 Curva crescente e appiattita | All’aumentare di n, la potenza si stabilizza |
 | 🎯 Punto in cui P ≈ 0.80 | Soglia ottimale per scegliere la dimensione campione |
 | ❗ Curva piatta a valori bassi | Effetto troppo piccolo per essere rilevabile |

@@ -1223,21 +1223,5 @@ Il diagramma SEM visualizzato rappresenta una struttura di relazioni tra **varia
 -   Le **variabili latenti** possono essere endogene o esogene a seconda del modello
 :::
 
-```{=html}
-<!-- Footer -->
-<footer class="bg-light text-center text-muted py-4 mt-5 border-top">
-  <div class="container">
-    <p class="mb-1">
-  © 2025 Antonio Di Mauro – Contenuti disponibili sotto licenza 
-  <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
-</p>
-    <p class="mb-0">
-      <a href="https://paypal.me/antood99?" class="text-muted">Supporta il progetto</a> •
-      <a href="https://github.com/antood99" class="text-muted" target="_blank">GitHub</a>
-    </p>
-  </div>
-</footer>
 
-
-```
 
