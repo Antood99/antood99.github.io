@@ -20,6 +20,21 @@ execute:
 editor: visual
 ---
 
+```{=html}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7874921546474653"
+     crossorigin="anonymous">
+</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6TJ02G2Y7B"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6TJ02G2Y7B');
+</script>
+
+```
+
 ## Indici di Statistica Inferenziale
 
 ```{r}
@@ -504,8 +519,7 @@ summary(mod)
     Significa che l'effetto di *hp* su *mpg* **cambia leggermente tra i gruppi**, ma la variabilità è più contenuta rispetto all'intercetta.
 
 -   **Correlazione intercetta-pendenza**:\
-    Gruppi con valori medi più alti di *mpg* tendono anche ad avere pendenze più "piatte" (meno negative), suggerendo una relazione positiva tra intercetta e pendenza.
-
+    L’output mostra una correlazione negativa (-1.00) tra intercetta e pendenza nei gruppi cyl, quindi gruppi con *mpg* medi più alti tendono ad avere pendenze più ripide (più negative)
 ------------------------------------------------------------------------
 
 ### 🔹 Errore residuo (Residual variance)
@@ -637,7 +651,7 @@ mod_dredge
 
 -   **Obiettivo**: confrontare tutti i sottoinsiemi possibili del modello globale per identificare il modello più parsimonioso secondo il criterio AIC.
 -   **Colonne principali**:
-    -   `Int`, `wt`, `hp`, `qsec`, `drat`: indicano la presenza (`+`) o assenza di ciascun termine nel modello.
+    -   `Int`, `wt`, `hp`, `qsec`, `drat`: indicano la presenza o assenza di ciascun termine nel modello.
     -   `df`: numero di parametri stimati nel modello.
     -   `logLik`: log-likelihood del modello.
     -   `AIC`: criterio di informazione di Akaike; valori più bassi indicano modelli migliori.
@@ -647,6 +661,7 @@ mod_dredge
     -   Il modello con `delta = 0` è il migliore secondo l'AIC.
     -   Modelli con `delta < 2` hanno un supporto sostanziale e possono essere considerati competitivi.
     -   I pesi di Akaike (`weight`) possono essere utilizzati per il model averaging o per valutare l'evidenza relativa a favore di ciascun modello.
+    
 :::
 
 ```{=html}
