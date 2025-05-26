@@ -520,6 +520,7 @@ summary(mod)
 
 -   **Correlazione intercetta-pendenza**:\
     L’output mostra una correlazione negativa (-1.00) tra intercetta e pendenza nei gruppi cyl, quindi gruppi con *mpg* medi più alti tendono ad avere pendenze più ripide (più negative)
+    
 ------------------------------------------------------------------------
 
 ### 🔹 Errore residuo (Residual variance)
