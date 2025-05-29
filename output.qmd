@@ -1222,6 +1222,28 @@ Il diagramma SEM visualizzato rappresenta una struttura di relazioni tra **varia
 -   **Freccia in entrata** (→) = variabile **endogena**
 -   **Solo frecce in uscita** = variabile **esogena**
 -   Le **variabili latenti** possono essere endogene o esogene a seconda del modello
+
+## Modello SEM ricorsivo o non ricorsivo
+
+# 🧭 Schema decisionale (logico):
+
+- **1. Ci sono relazioni bidirezionali tra variabili endogene?**
+  - ✅ Sì → **Modello non ricorsivo**
+  - ❌ No → Vai al punto 2
+
+- **2. Ci sono correlazioni tra gli errori delle variabili endogene?**
+  - ✅ Sì → **Modello non ricorsivo**
+  - ❌ No → **Modello ricorsivo**
+  
+## 🧠 Definizioni:
+
+ - Ricorsivo:
+     * Nessuna retroazione tra variabili endogene
+     * Nessuna correlazione tra gli errori di variabili endogene
+ - Non ricorsivo:
+     * Feedback o relazioni bidirezionali
+     * Errori correlati tra variabili endogene
+
 :::
 
 
