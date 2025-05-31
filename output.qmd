@@ -1,24 +1,3 @@
----
-title: "Analisi dei dati per la psicologia"
-subtitle: "Appunti utili"
-author: "Antonio Di Mauro"
-include-in-header: assets/header.html
-format:
-  html:
-    theme: cosmo
-    code-fold: false
-    self-contained: true
-    toc: true   
-    toc-depth: 3 
-    toc-expand: 3
-    message: false
-    css: "assets/custom.css"
-execute:
-  echo: false
-  warning: false
-  message: false
-editor: visual
----
 
 ## Indici di Statistica Inferenziale
 

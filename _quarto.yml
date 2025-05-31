@@ -1,15 +1,34 @@
-title: "Sito-github"
-subtitle: ""
-author: ""
+project:
+  type: website
+
+lang: it
+
+website:
+  title: "Analisi dei dati per la psicologia"
+  
+
+  navbar:
+    left:
+      - text: Lettura Output
+        href: output.qmd
+      - text: Grafici
+        href: grafici.qmd
+      - text: Usa R online
+        href: R-online.qmd
 include-in-header: assets/header.html
 include-after-body: assets/footer.html
-format: 
+format:
   html:
+    theme: cosmo
+    code-fold: false
     self-contained: true
     toc: true   
     toc-depth: 3 
-    toc-expand: 3 
-    code-fold: false 
+    toc-expand: 3
     message: false
     css: "assets/custom.css"
+execute:
+  echo: false
+  warning: false
+  message: false
 editor: visual

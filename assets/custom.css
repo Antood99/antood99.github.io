@@ -32,3 +32,9 @@ a:hover {
     border-left: 4px solid #760000 !important;
 }
 
+.navbar-brand {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: inherit;
+}

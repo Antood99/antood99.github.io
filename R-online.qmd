@@ -1,24 +1,4 @@
----
-title: "Usa R online"
-subtitle: ""
-author: ""
-include-in-header: assets/header.html
-format:
-  html:
-    theme: cosmo
-    code-fold: false
-    self-contained: true
-    toc: false   
-    toc-depth: 3 
-    toc-expand: 3
-    message: false
-    css: "assets/custom.css"
-execute:
-  echo: false
-  warning: false
-  message: false
-editor: visual
----
+
 
 ## R - online !
 
