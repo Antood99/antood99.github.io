@@ -12,7 +12,7 @@ website:
       - text: Lettura Output
         href: output.qmd
       - text: Grafici
-        href: grafici.qmd
+        href: Grafici.qmd
       - text: Usa R online
         href: R-online.qmd
 include-in-header: assets/header.html
